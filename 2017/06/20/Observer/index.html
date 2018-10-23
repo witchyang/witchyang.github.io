@@ -1,0 +1,800 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="C#,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1">
+
+
+
+
+
+
+<meta name="description" content="观察者模式观察者模式(Observer Pattern)是设计模式中比较常见的一种，有时候也称为发布/订阅者模式。观察者模式定义了一种一对多的依赖关系，让多个观察者对象同时监听某一个目标主题对象，当主题对象状态发生变化时，会通知所有的观察者对象，使其自动作出相应的响应行为。 在现实生活中处处可见观察者模式，比如说微信中的订阅号，微博关注好友，等等。当订阅号有什么推送，所有关注此订阅号的用户都将收到">
+<meta name="keywords" content="C#">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C#中观察者模式(Observer Pattern)">
+<meta property="og:url" content="http://yoursite.com/2017/06/20/Observer/index.html">
+<meta property="og:site_name" content="葛小野">
+<meta property="og:description" content="观察者模式观察者模式(Observer Pattern)是设计模式中比较常见的一种，有时候也称为发布/订阅者模式。观察者模式定义了一种一对多的依赖关系，让多个观察者对象同时监听某一个目标主题对象，当主题对象状态发生变化时，会通知所有的观察者对象，使其自动作出相应的响应行为。 在现实生活中处处可见观察者模式，比如说微信中的订阅号，微博关注好友，等等。当订阅号有什么推送，所有关注此订阅号的用户都将收到">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2017/06/20/Observer/1.jpg">
+<meta property="og:image" content="http://yoursite.com/2017/06/20/Observer/2.jpg">
+<meta property="og:image" content="http://yoursite.com/2017/06/20/Observer/3.jpg">
+<meta property="og:updated_time" content="2017-06-21T05:32:58.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="C#中观察者模式(Observer Pattern)">
+<meta name="twitter:description" content="观察者模式观察者模式(Observer Pattern)是设计模式中比较常见的一种，有时候也称为发布/订阅者模式。观察者模式定义了一种一对多的依赖关系，让多个观察者对象同时监听某一个目标主题对象，当主题对象状态发生变化时，会通知所有的观察者对象，使其自动作出相应的响应行为。 在现实生活中处处可见观察者模式，比如说微信中的订阅号，微博关注好友，等等。当订阅号有什么推送，所有关注此订阅号的用户都将收到">
+<meta name="twitter:image" content="http://yoursite.com/2017/06/20/Observer/1.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/06/20/Observer/">
+
+
+
+
+
+  <title>C#中观察者模式(Observer Pattern) | 葛小野</title>
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">葛小野</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">临渊羡鱼不如退而结网</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/20/Observer/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="杨玺彤">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/1.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="葛小野">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">C#中观察者模式(Observer Pattern)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-20T14:47:57+09:00">
+                2017-06-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/" itemprop="url" rel="index">
+                    <span itemprop="name">C#</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h4 id="观察者模式"><a href="#观察者模式" class="headerlink" title="观察者模式"></a>观察者模式</h4><p>观察者模式(Observer Pattern)是设计模式中比较常见的一种，有时候也称为发布/订阅者模式。观察者模式定义了一种一对多的依赖关系，让多个观察者对象同时监听某一个目标主题对象，当主题对象状态发生变化时，会通知所有的观察者对象，使其自动作出相应的响应行为。</p>
+<p>在现实生活中处处可见观察者模式，比如说微信中的订阅号，微博关注好友，等等。当订阅号有什么推送，所有关注此订阅号的用户都将收到推送信息。</p>
+<h4 id="观察者模式组成"><a href="#观察者模式组成" class="headerlink" title="观察者模式组成"></a>观察者模式组成</h4><p>从整体来讲，观察者模式中会存在两种角色，观察者角色，和被观察角色(即主体角色)。<br>观察者模式中具有的角色：</p>
+<ol>
+<li>抽象主题(Subject)：抽象主题把所有观察者对象的引用保存在一个聚集里，每个主题都可以有N多个观察者。抽象主题提供一个接口或抽象类，可以增加和删除观察者对象。</li>
+<li>具体主题(ConcreteSubject)：实现抽象主题接口，将有关状态存入具体观察者对象，在具体主题内部状态发生改变时，通知所有登记过的观察者。</li>
+<li>抽象观察者(Observer)：为所有具体观察者定义一个接口，在主题通知时更新自己。一般由抽象类或接口实现。</li>
+<li>具体观察者(ConcreteObserver)：实现抽象观察者所要求的接口，是自身状态和主题状态协调。</li>
+</ol>
+<p>具体过程可以参考观察者模式结构图：<br><img src="1.jpg" alt=""></p>
+<h4 id="观察者模式优缺点"><a href="#观察者模式优缺点" class="headerlink" title="观察者模式优缺点"></a>观察者模式优缺点</h4><h5 id="优点："><a href="#优点：" class="headerlink" title="优点："></a>优点：</h5><ol>
+<li>广播通信。<br>观察者模式支持广播通信，被观察者会向所有注册过的观察者发出通知。</li>
+<li>聚耦合。<br>观察者模式在观察者和被观察者间建立了一个抽象的耦合。被观察者并不知道任何一个具体的观察者，只是保存抽象观察者的列表，每一个具体观察者都符合一个抽象观察者的接口。</li>
+<li>表示层和数据逻辑层分离。<br>观察者模式实现了表示层和数据逻辑层的分离，并定义了稳定的更新消息传递机制，抽象了更新接口，使其可以有各种不同的表示层，即观察者。</li>
+</ol>
+<h5 id="缺点："><a href="#缺点：" class="headerlink" title="缺点："></a>缺点：</h5><ol>
+<li>时间复杂度。<br>如果一个被观察对象有很多直接和间接的观察者的话，通知到所有的观察者将会需要很长时间。</li>
+<li>内联不足。<br>虽然观察者模式可以随时将主题对象的变化通知给订阅者，但是观察者无法得知所订阅的主题对象怎样发生变化。</li>
+<li>循环调用。<br>若被观察的主题对象之间有循环依赖的话，被观察者之间会进行循环调用，导致系统崩溃，需要特殊主义。</li>
+</ol>
+<h4 id="观察者模式实现"><a href="#观察者模式实现" class="headerlink" title="观察者模式实现"></a>观察者模式实现</h4><p>知道了整个工作原理，现在我们来按照上面的流程实现一个观察者模式。模仿微信公众号推送文章过程。<br>整体框架如图所示，我们一共创建了四个类和一个接口。<br><img src="2.jpg" alt=""><br>首先，定义一个抽象主题类，即公众号抽象类。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"> #region 公众号抽象类</span><br><span class="line">    public abstract class OfficalAccounts &#123;</span><br><span class="line">        //保存观察者列表</span><br><span class="line">        private List&lt;IObserver&gt; observers = new List&lt;IObserver&gt;();</span><br><span class="line"></span><br><span class="line">        //公众号名称</span><br><span class="line">        public string OfficalAccountsName &#123; get; set; &#125;</span><br><span class="line">        //发送文章标题</span><br><span class="line">        public string OfficalAccountsTitle &#123; get; set; &#125;</span><br><span class="line">        //发送的文章信息</span><br><span class="line">        public string OfficalAccountsInfo &#123; get; set; &#125;</span><br><span class="line"></span><br><span class="line">        //公众号构造函数</span><br><span class="line">        public OfficalAccounts(string name, string title, string info) &#123;</span><br><span class="line">            OfficalAccountsName = name;</span><br><span class="line">            OfficalAccountsTitle = title;</span><br><span class="line">            OfficalAccountsInfo = info;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        // 增加，删除订阅者</span><br><span class="line">        public void AddObserver(IObserver observer) &#123;</span><br><span class="line">            if (observers.Contains(observer)) &#123;</span><br><span class="line">                return;</span><br><span class="line">            &#125;</span><br><span class="line">            observers.Add(observer);</span><br><span class="line">        &#125;</span><br><span class="line">        public void DeleteObserver(IObserver observer) &#123;</span><br><span class="line">            if (observers.Contains(observer)) &#123;</span><br><span class="line">                observers.Remove(observer);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        // 遍历通知每一个订阅者</span><br><span class="line">        public void PublishContext() &#123;</span><br><span class="line">            foreach (IObserver o in observers) &#123;</span><br><span class="line">                if (o != null) &#123;</span><br><span class="line">                    o.Recieve(this);</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">#endregion</span><br></pre></td></tr></table></figure></p>
+<p>具体公众号类<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#region 具体公众号类</span><br><span class="line">   public class MeituanOfficalAccout : OfficalAccounts</span><br><span class="line">   &#123;</span><br><span class="line">       public MeituanOfficalAccout(string name, string title, string info) : base(name, title, info)</span><br><span class="line">       &#123;</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br><span class="line">#endregion</span><br></pre></td></tr></table></figure></p>
+<p>订阅者接口<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"> #region  订阅者接口</span><br><span class="line">    public interface IObserver &#123;</span><br><span class="line">        void Recieve(OfficalAccounts offical);</span><br><span class="line">    &#125;</span><br><span class="line">#endregion</span><br></pre></td></tr></table></figure></p>
+<p>具体订阅者类<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">#region 具体订阅者类</span><br><span class="line">    public class observer : IObserver &#123;</span><br><span class="line">    //订阅者姓名</span><br><span class="line">        private string _name;</span><br><span class="line">        public string UserName &#123;</span><br><span class="line">            get &#123; return _name; &#125;</span><br><span class="line">            set &#123; _name = value; &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        public observer(string name) &#123;</span><br><span class="line">           this._name = name;</span><br><span class="line">        &#125;</span><br><span class="line">	//订阅接受推送函数</span><br><span class="line">        public void Recieve(OfficalAccounts offical) &#123;</span><br><span class="line">            Console.WriteLine(&quot;User\&quot;&#123;0&#125;\&quot;have recieved a post from\&quot;&#123;1&#125;\&quot;，the title is :\&quot;&#123;2&#125;\&quot;,Content：\&quot;&#123;3&#125;\&quot;&quot;,</span><br><span class="line">                UserName,offical.OfficalAccountsName,offical.OfficalAccountsTitle,offical.OfficalAccountsInfo);</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">#endregion</span><br></pre></td></tr></table></figure></p>
+<p>测试类<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">#region 测试类</span><br><span class="line">   class Program</span><br><span class="line">   &#123;</span><br><span class="line">       static void Main(string[] args)</span><br><span class="line">       &#123;</span><br><span class="line">           Console.WriteLine(&quot;Start posting...&quot;);</span><br><span class="line">           Console.WriteLine(&quot;----------------------------------------------&quot;);</span><br><span class="line">           //创建一个推送</span><br><span class="line">           OfficalAccounts meituan = new MeituanOfficalAccout(&quot;meituan&quot;, &quot;Sale&quot;, &quot;ALL Food 50% Sale!!!!!!&quot;);</span><br><span class="line">           //创建用户</span><br><span class="line">           observer user1 = new observer(&quot;baby&quot;);</span><br><span class="line">           observer user2 = new observer(&quot;yang&quot;);</span><br><span class="line">           observer user3 = new observer(&quot;kim&quot;);</span><br><span class="line">           //使用户关注公众号</span><br><span class="line">           meituan.AddObserver(user1);</span><br><span class="line">           meituan.AddObserver(user2);</span><br><span class="line">           meituan.AddObserver(user3);</span><br><span class="line">           //美团发送推送</span><br><span class="line">           meituan.PublishContext();</span><br><span class="line">           Console.WriteLine(&quot;/////////////////////////////////////////&quot;);</span><br><span class="line">           Console.WriteLine(&quot;baby cancled follow about meituan.&quot;);</span><br><span class="line">           Console.WriteLine(&quot;-----------------------------------------&quot;);</span><br><span class="line">           //用户baby取消了对美团公众号的订阅</span><br><span class="line">           meituan.DeleteObserver(user1);</span><br><span class="line">           //美团推送</span><br><span class="line">           meituan.PublishContext();</span><br><span class="line"></span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br><span class="line"> #endregion</span><br></pre></td></tr></table></figure></p>
+<p>最终运行结果如图<br><img src="3.jpg" alt=""></p>
+<h4 id="用委托来实现观察者模式"><a href="#用委托来实现观察者模式" class="headerlink" title="用委托来实现观察者模式"></a>用委托来实现观察者模式</h4><p>之前我们已经讲过委托在C#中的重要作用，现在我们来用委托来实现上面的观察者模式。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">namespace observerDelegate</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">    //定义委托代替订阅者接口类</span><br><span class="line">    public delegate void NotifyEventHandler(object sender);</span><br><span class="line"></span><br><span class="line">#region 公众号抽象类</span><br><span class="line">    public class OfficalAccounts</span><br><span class="line">    &#123;</span><br><span class="line">        public NotifyEventHandler notifyEvent;</span><br><span class="line">        //公众号名称</span><br><span class="line">        public string OfficalAccountsName &#123; get; set; &#125;</span><br><span class="line">        //发送文章标题</span><br><span class="line">        public string OfficalAccountsTitle &#123; get; set; &#125;</span><br><span class="line">        //发送的文章信息</span><br><span class="line">        public string OfficalAccountsInfo &#123; get; set; &#125;</span><br><span class="line"></span><br><span class="line">        //公众号构造函数</span><br><span class="line">        public OfficalAccounts(string name, string title, string info)</span><br><span class="line">        &#123;</span><br><span class="line">            OfficalAccountsName = name;</span><br><span class="line">            OfficalAccountsTitle = title;</span><br><span class="line">            OfficalAccountsInfo = info;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        // 增加，删除订阅者</span><br><span class="line">        public void AddObserver(NotifyEventHandler observer)</span><br><span class="line">        &#123;</span><br><span class="line">            notifyEvent += observer;</span><br><span class="line">        &#125;</span><br><span class="line">        public void DeleteObserver(NotifyEventHandler observer)</span><br><span class="line">        &#123;</span><br><span class="line">            notifyEvent -= observer;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        // 遍历通知每一个订阅者</span><br><span class="line">        public void PublishContext()</span><br><span class="line">        &#123;</span><br><span class="line">            if (notifyEvent!=null) &#123;</span><br><span class="line">                notifyEvent(this);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">#endregion</span><br></pre></td></tr></table></figure></p>
+<p>具体公众号类<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">#region 具体公众号类</span><br><span class="line">    public class MeituanOfficalAccout : OfficalAccounts</span><br><span class="line">    &#123;</span><br><span class="line">        public MeituanOfficalAccout(string name, string title, string info) : base(name, title, info)</span><br><span class="line">        &#123;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"> #endregion</span><br></pre></td></tr></table></figure></p>
+<p>具体订阅者类<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">#region 具体订阅者类</span><br><span class="line">    public class observer </span><br><span class="line">    &#123;</span><br><span class="line">        //订阅者姓名</span><br><span class="line">        private string _name;</span><br><span class="line">        public string UserName</span><br><span class="line">        &#123;</span><br><span class="line">            get &#123; return _name; &#125;</span><br><span class="line">            set &#123; _name = value; &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        public observer(string name)</span><br><span class="line">        &#123;</span><br><span class="line">            this._name = name;</span><br><span class="line">        &#125;</span><br><span class="line">        //订阅者接收推送</span><br><span class="line">        public void Recieve(object obj)</span><br><span class="line">        &#123;</span><br><span class="line">            OfficalAccounts offical = obj as OfficalAccounts;</span><br><span class="line">            Console.WriteLine(&quot;User\&quot;&#123;0&#125;\&quot;have recieved a post from\&quot;&#123;1&#125;\&quot;，the title is :\&quot;&#123;2&#125;\&quot;,Content：\&quot;&#123;3&#125;\&quot;&quot;,</span><br><span class="line">                UserName, offical.OfficalAccountsName, offical.OfficalAccountsTitle, offical.OfficalAccountsInfo);</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">#endregion</span><br></pre></td></tr></table></figure></p>
+<p>测试类<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">#region 测试类</span><br><span class="line">    class Program</span><br><span class="line">    &#123;</span><br><span class="line">        static void Main(string[] args)</span><br><span class="line">        &#123;</span><br><span class="line">            Console.WriteLine(&quot;Start posting...&quot;);</span><br><span class="line">            Console.WriteLine(&quot;----------------------------------------------&quot;);</span><br><span class="line">            //创建一个推送</span><br><span class="line">            OfficalAccounts meituan = new MeituanOfficalAccout(&quot;meituan&quot;, &quot;Sale&quot;, &quot;ALL Food 50% Sale!!!!!!&quot;);</span><br><span class="line">            //创建用户</span><br><span class="line">            observer user1 = new observer(&quot;baby&quot;);</span><br><span class="line">            observer user2 = new observer(&quot;yang&quot;);</span><br><span class="line">            observer user3 = new observer(&quot;kim&quot;);</span><br><span class="line"></span><br><span class="line">            //使用户关注公众号</span><br><span class="line">            meituan.AddObserver(new NotifyEventHandler(user1.Recieve));</span><br><span class="line">            meituan.AddObserver(new NotifyEventHandler(user2.Recieve));</span><br><span class="line">            meituan.AddObserver(new NotifyEventHandler(user3.Recieve));</span><br><span class="line">            //美团发送推送</span><br><span class="line">            meituan.PublishContext();</span><br><span class="line">            Console.WriteLine(&quot;/////////////////////////////////////////&quot;);</span><br><span class="line">            Console.WriteLine(&quot;baby cancled follow about meituan.&quot;);</span><br><span class="line">            Console.WriteLine(&quot;-----------------------------------------&quot;);</span><br><span class="line">            //用户baby取消了对美团公众号的订阅</span><br><span class="line">            meituan.DeleteObserver(new NotifyEventHandler(user1.Recieve));</span><br><span class="line">            //美团推送</span><br><span class="line">            meituan.PublishContext();</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"> #endregion</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>以上。</p>
+<hr>
+<p>[1]:参考 <a href="http://www.vkadoo.cn/3E618377A5ECBF5B31C32794D00E464E.AHtml" target="_blank" rel="noopener">http://www.vkadoo.cn/3E618377A5ECBF5B31C32794D00E464E.AHtml</a><br>[2]:参考 <a href="http://www.newbieol.com/information/1766.html" target="_blank" rel="noopener">http://www.newbieol.com/information/1766.html</a><br>[3]: 参考 <a href="http://www.cnblogs.com/zhili/p/ObserverPattern.html" target="_blank" rel="noopener">http://www.cnblogs.com/zhili/p/ObserverPattern.html</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>如果觉得对您有帮助，就扫我交个朋友吧！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/2.jpg" alt="杨玺彤 WeChat Pay">
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/3.jpg" alt="杨玺彤 Alipay">
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/C/" rel="tag"># C#</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/06/13/windows-value/" rel="next" title="C# 中窗体间传值总结">
+                <i class="fa fa-chevron-left"></i> C# 中窗体间传值总结
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/06/21/database/" rel="prev" title="database 知识总结">
+                database 知识总结 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/1.jpg" alt="杨玺彤">
+          <p class="site-author-name" itemprop="name">杨玺彤</p>
+           
+              <p class="site-description motion-element" itemprop="description">Be better for something</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/2396326053/profile?topnav=1&wvr=6&is_all=1" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/witchyang" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#观察者模式"><span class="nav-number">1.</span> <span class="nav-text">观察者模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#观察者模式组成"><span class="nav-number">2.</span> <span class="nav-text">观察者模式组成</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#观察者模式优缺点"><span class="nav-number">3.</span> <span class="nav-text">观察者模式优缺点</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#优点："><span class="nav-number">3.1.</span> <span class="nav-text">优点：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#缺点："><span class="nav-number">3.2.</span> <span class="nav-text">缺点：</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#观察者模式实现"><span class="nav-number">4.</span> <span class="nav-text">观察者模式实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#用委托来实现观察者模式"><span class="nav-number">5.</span> <span class="nav-text">用委托来实现观察者模式</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">杨玺彤</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

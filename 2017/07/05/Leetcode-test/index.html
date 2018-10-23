@@ -1,0 +1,779 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Algorithm,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1">
+
+
+
+
+
+
+<meta name="description" content="1. Two SumGiven an array of integers, return indices of the two numbers such that they add up to a specific target.  给一个整数数组，找到两个数使得他们的和等于一个给定的数，返回这两个数的下标。You may assume that each input would have exa">
+<meta name="keywords" content="Algorithm">
+<meta property="og:type" content="article">
+<meta property="og:title" content="小白LeetCode 刷题记录（1-10）（待续）">
+<meta property="og:url" content="http://yoursite.com/2017/07/05/Leetcode-test/index.html">
+<meta property="og:site_name" content="葛小野">
+<meta property="og:description" content="1. Two SumGiven an array of integers, return indices of the two numbers such that they add up to a specific target.  给一个整数数组，找到两个数使得他们的和等于一个给定的数，返回这两个数的下标。You may assume that each input would have exa">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-08-22T07:25:16.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="小白LeetCode 刷题记录（1-10）（待续）">
+<meta name="twitter:description" content="1. Two SumGiven an array of integers, return indices of the two numbers such that they add up to a specific target.  给一个整数数组，找到两个数使得他们的和等于一个给定的数，返回这两个数的下标。You may assume that each input would have exa">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/07/05/Leetcode-test/">
+
+
+
+
+
+  <title>小白LeetCode 刷题记录（1-10）（待续） | 葛小野</title>
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">葛小野</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">临渊羡鱼不如退而结网</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/05/Leetcode-test/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="杨玺彤">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/1.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="葛小野">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">小白LeetCode 刷题记录（1-10）（待续）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-05T10:31:46+09:00">
+                2017-07-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Algorithm/" itemprop="url" rel="index">
+                    <span itemprop="name">Algorithm</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h4 id="1-Two-Sum"><a href="#1-Two-Sum" class="headerlink" title="1. Two Sum"></a>1. Two Sum</h4><h5 id="Given-an-array-of-integers-return-indices-of-the-two-numbers-such-that-they-add-up-to-a-specific-target-给一个整数数组，找到两个数使得他们的和等于一个给定的数，返回这两个数的下标。"><a href="#Given-an-array-of-integers-return-indices-of-the-two-numbers-such-that-they-add-up-to-a-specific-target-给一个整数数组，找到两个数使得他们的和等于一个给定的数，返回这两个数的下标。" class="headerlink" title="Given an array of integers, return indices of the two numbers such that they add up to a specific target.  给一个整数数组，找到两个数使得他们的和等于一个给定的数，返回这两个数的下标。"></a>Given an array of integers, return indices of the two numbers such that they add up to a specific target.  给一个整数数组，找到两个数使得他们的和等于一个给定的数，返回这两个数的下标。</h5><h5 id="You-may-assume-that-each-input-would-have-exactly-one-solution-and-you-may-not-use-the-same-element-twice-可以假设只有一组答案。"><a href="#You-may-assume-that-each-input-would-have-exactly-one-solution-and-you-may-not-use-the-same-element-twice-可以假设只有一组答案。" class="headerlink" title="You may assume that each input would have exactly one solution, and you may not use the same element twice.  可以假设只有一组答案。"></a>You may assume that each input would have exactly one solution, and you may not use the same element twice.  可以假设只有一组答案。</h5><p>Given nums = [2, 7, 11, 15], target = 9, return [0, 1].</p>
+<p><strong>解题思路: 先遍历一遍数组,建立map数据，然后再遍历一遍，开始查找，找到则记录index。</strong></p>
+<p>JAVA:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">public class Solution &#123;</span><br><span class="line">    public int[] twoSum(int[] nums, int target) &#123;</span><br><span class="line">        HashMap&lt;Integer,Integer&gt; map = new HashMap&lt;Integer,Integer&gt;();</span><br><span class="line">        int[] res = new int[2];</span><br><span class="line">        for(int i = 0;i &lt; nums.length; i++)&#123;</span><br><span class="line">            map.put(nums[i],i);</span><br><span class="line">        &#125;</span><br><span class="line">        for(int i =0;i&lt;nums.length; i++)&#123;</span><br><span class="line">            int t = target - nums[i];</span><br><span class="line">            if(map.containsKey(t)&amp;&amp; map.get(t)!= i)&#123;</span><br><span class="line">                res[0] = i;</span><br><span class="line">                res[1] = map.get(t);</span><br><span class="line">                break;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return res;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>把两个for循环合并成一个。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">public class Solution &#123;</span><br><span class="line">    public int[] twoSum(int[] nums, int target) &#123;</span><br><span class="line">    int[] res = new int[2];</span><br><span class="line">    Map&lt;Integer, Integer&gt; map = new HashMap&lt;Integer, Integer&gt;();</span><br><span class="line">    for (int i = 0; i &lt; nums.length; i++) &#123;</span><br><span class="line">       if(map.containsKey(target-nums[i]))&#123;</span><br><span class="line">           res[1] = i;</span><br><span class="line">           res[0] = map.get(target-nums[i]);</span><br><span class="line">          break;</span><br><span class="line">       &#125;</span><br><span class="line">        map.put(nums[i],i);</span><br><span class="line">    &#125;</span><br><span class="line">    return res; </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>学习知识点：</strong></p>
+<ul>
+<li>HashMap 是一种键值对应的数据结构。是哈希表的Map接口(<code>java.util.Map</code> )的实现类。非同步，允许使用NULL。</li>
+<li>根据键的HashCode值存储数据，具有很快的访问速度。</li>
+<li>HashMap 没有顺序。通过get()来获取value , put()来插入value, ontainsKey() 来检验对象是否存在，</li>
+</ul>
+<h4 id="2-Add-Two-Numbers"><a href="#2-Add-Two-Numbers" class="headerlink" title="2. Add Two Numbers"></a>2. Add Two Numbers</h4><h5 id="You-are-given-two-non-empty-linked-lists-representing-two-non-negative-integers-The-digits-are-stored-in-reverse-order-and-each-of-their-nodes-contain-a-single-digit-Add-the-two-numbers-and-return-it-as-a-linked-list-给你两个非空的链表来表示两个非负整数。整数的每个数字倒序存储在链表的每个节点中。现在你需要写一个函数，将两个整数相加，并以链表的形式返回它们的和。"><a href="#You-are-given-two-non-empty-linked-lists-representing-two-non-negative-integers-The-digits-are-stored-in-reverse-order-and-each-of-their-nodes-contain-a-single-digit-Add-the-two-numbers-and-return-it-as-a-linked-list-给你两个非空的链表来表示两个非负整数。整数的每个数字倒序存储在链表的每个节点中。现在你需要写一个函数，将两个整数相加，并以链表的形式返回它们的和。" class="headerlink" title="You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order and each of their nodes contain a single digit. Add the two numbers and return it as a linked list. 给你两个非空的链表来表示两个非负整数。整数的每个数字倒序存储在链表的每个节点中。现在你需要写一个函数，将两个整数相加，并以链表的形式返回它们的和。"></a>You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order and each of their nodes contain a single digit. Add the two numbers and return it as a linked list. 给你两个非空的链表来表示两个非负整数。整数的每个数字倒序存储在链表的每个节点中。现在你需要写一个函数，将两个整数相加，并以链表的形式返回它们的和。</h5><h5 id="You-may-assume-the-two-numbers-do-not-contain-any-leading-zero-except-the-number-0-itself-你可以假设两个整数没有任何前导零，除非是零本身。"><a href="#You-may-assume-the-two-numbers-do-not-contain-any-leading-zero-except-the-number-0-itself-你可以假设两个整数没有任何前导零，除非是零本身。" class="headerlink" title="You may assume the two numbers do not contain any leading zero, except the number 0 itself.  你可以假设两个整数没有任何前导零，除非是零本身。"></a>You may assume the two numbers do not contain any leading zero, except the number 0 itself.  你可以假设两个整数没有任何前导零，除非是零本身。</h5><p>Input: (2 -&gt; 4 -&gt; 3) + (5 -&gt; 6 -&gt; 4)<br>Output: 7 -&gt; 0 -&gt; 8</p>
+<p><strong>思路：</strong><br>两个链表求和，先做一个大循环，对每一位进行操作。要考虑两个链表长度不一致的情况。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">public class Solution &#123;</span><br><span class="line">    public ListNode addTwoNumbers(ListNode l1, ListNode l2) &#123;</span><br><span class="line">        ListNode c1 = l1;</span><br><span class="line">        ListNode c2 = l2;</span><br><span class="line">        ListNode sentinel = new ListNode(0);</span><br><span class="line">        ListNode d = sentinel;</span><br><span class="line">        </span><br><span class="line">        int sum = 0;</span><br><span class="line">        while(c1!=null || c2!=null )&#123;</span><br><span class="line">            sum /= 10;</span><br><span class="line">            if(c1!= null)&#123;</span><br><span class="line">                sum+= c1.val;</span><br><span class="line">                c1 = c1.next;</span><br><span class="line">            &#125;</span><br><span class="line">            if(c2!=null)&#123;</span><br><span class="line">                sum+= c2.val;</span><br><span class="line">                c2 = c2.next;</span><br><span class="line">            &#125;</span><br><span class="line">            d.next = new ListNode(sum % 10);</span><br><span class="line">            d = d.next;</span><br><span class="line">        &#125;</span><br><span class="line">        if(sum / 10 ==1)</span><br><span class="line">            d.next = new ListNode(1);</span><br><span class="line">        return sentinel.next;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="3-Longest-Substring-Without-Repeating-Characters"><a href="#3-Longest-Substring-Without-Repeating-Characters" class="headerlink" title="3.  Longest Substring Without Repeating Characters"></a>3.  Longest Substring Without Repeating Characters</h4><h5 id="Given-a-string-find-the-length-of-the-longest-substring-without-repeating-characters-给定一个字符串，找出其没有重复字符的最大子序列的长度"><a href="#Given-a-string-find-the-length-of-the-longest-substring-without-repeating-characters-给定一个字符串，找出其没有重复字符的最大子序列的长度" class="headerlink" title="Given a string, find the length of the longest substring without repeating characters.  给定一个字符串，找出其没有重复字符的最大子序列的长度."></a>Given a string, find the length of the longest substring without repeating characters.  给定一个字符串，找出其没有重复字符的最大子序列的长度.</h5><p>Given “abcabcbb”, the answer is “abc”, which the length is 3.<br>Given “bbbbb”, the answer is “b”, with the length of 1.<br>Given “pwwkew”, the answer is “wke”, with the length of 3. Note that the answer must be a substring, “pwke” is a subsequence and not a substring.   </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">public class Solution &#123;</span><br><span class="line">    public int lengthOfLongestSubstring(String s) &#123;</span><br><span class="line">        int[] map = new int[256];</span><br><span class="line">        int j = 0;</span><br><span class="line">        int i = 0;</span><br><span class="line">        int ans = 0;</span><br><span class="line">        </span><br><span class="line">        for(i = 0; i &lt; s.length(); i++)&#123;</span><br><span class="line">            while(j &lt; s.length() &amp;&amp; map[s.charAt(j)]==0)&#123;</span><br><span class="line">                map[s.charAt(j)] = 1;</span><br><span class="line">                ans = Math.max(ans, j-i +1);</span><br><span class="line">                j++;</span><br><span class="line">            &#125;</span><br><span class="line">            map[s.charAt(i)]=0;</span><br><span class="line">            </span><br><span class="line">        &#125;</span><br><span class="line">        return ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>对现阶段的我来说太难，，，待续，，，，，，，，，，，</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>如果觉得对您有帮助，就扫我交个朋友吧！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/2.jpg" alt="杨玺彤 WeChat Pay">
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/3.jpg" alt="杨玺彤 Alipay">
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Algorithm/" rel="tag"># Algorithm</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/03/msi安装/" rel="next" title=".msi 文件无法安装">
+                <i class="fa fa-chevron-left"></i> .msi 文件无法安装
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/07/06/algorithm0/" rel="prev" title="算法笔记--算法复杂度">
+                算法笔记--算法复杂度 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/1.jpg" alt="杨玺彤">
+          <p class="site-author-name" itemprop="name">杨玺彤</p>
+           
+              <p class="site-description motion-element" itemprop="description">Be better for something</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/2396326053/profile?topnav=1&wvr=6&is_all=1" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/witchyang" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-Two-Sum"><span class="nav-number">1.</span> <span class="nav-text">1. Two Sum</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Given-an-array-of-integers-return-indices-of-the-two-numbers-such-that-they-add-up-to-a-specific-target-给一个整数数组，找到两个数使得他们的和等于一个给定的数，返回这两个数的下标。"><span class="nav-number">1.1.</span> <span class="nav-text">Given an array of integers, return indices of the two numbers such that they add up to a specific target.  给一个整数数组，找到两个数使得他们的和等于一个给定的数，返回这两个数的下标。</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#You-may-assume-that-each-input-would-have-exactly-one-solution-and-you-may-not-use-the-same-element-twice-可以假设只有一组答案。"><span class="nav-number">1.2.</span> <span class="nav-text">You may assume that each input would have exactly one solution, and you may not use the same element twice.  可以假设只有一组答案。</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-Add-Two-Numbers"><span class="nav-number">2.</span> <span class="nav-text">2. Add Two Numbers</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#You-are-given-two-non-empty-linked-lists-representing-two-non-negative-integers-The-digits-are-stored-in-reverse-order-and-each-of-their-nodes-contain-a-single-digit-Add-the-two-numbers-and-return-it-as-a-linked-list-给你两个非空的链表来表示两个非负整数。整数的每个数字倒序存储在链表的每个节点中。现在你需要写一个函数，将两个整数相加，并以链表的形式返回它们的和。"><span class="nav-number">2.1.</span> <span class="nav-text">You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order and each of their nodes contain a single digit. Add the two numbers and return it as a linked list. 给你两个非空的链表来表示两个非负整数。整数的每个数字倒序存储在链表的每个节点中。现在你需要写一个函数，将两个整数相加，并以链表的形式返回它们的和。</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#You-may-assume-the-two-numbers-do-not-contain-any-leading-zero-except-the-number-0-itself-你可以假设两个整数没有任何前导零，除非是零本身。"><span class="nav-number">2.2.</span> <span class="nav-text">You may assume the two numbers do not contain any leading zero, except the number 0 itself.  你可以假设两个整数没有任何前导零，除非是零本身。</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-Longest-Substring-Without-Repeating-Characters"><span class="nav-number">3.</span> <span class="nav-text">3.  Longest Substring Without Repeating Characters</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Given-a-string-find-the-length-of-the-longest-substring-without-repeating-characters-给定一个字符串，找出其没有重复字符的最大子序列的长度"><span class="nav-number">3.1.</span> <span class="nav-text">Given a string, find the length of the longest substring without repeating characters.  给定一个字符串，找出其没有重复字符的最大子序列的长度.</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">杨玺彤</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

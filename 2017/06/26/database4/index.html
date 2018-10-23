@@ -1,0 +1,780 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="DB,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1">
+
+
+
+
+
+
+<meta name="description" content="MySQL提供了很多的连接器和API来帮助在不同平台的使用，具体可以查看官方文档Chapter 27 Connectors and APIs 。本文的环境设置：Win7, MySQL 5.7.13, Visual Studio 2015. 安装 Connector/Net首先下载MySQL的Net连接器。下载地址为：https://dev.mysql.com/downloads/file/?id=">
+<meta name="keywords" content="DB">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL 学习笔记（三） C# 调用MySQL数据库">
+<meta property="og:url" content="http://yoursite.com/2017/06/26/database4/index.html">
+<meta property="og:site_name" content="葛小野">
+<meta property="og:description" content="MySQL提供了很多的连接器和API来帮助在不同平台的使用，具体可以查看官方文档Chapter 27 Connectors and APIs 。本文的环境设置：Win7, MySQL 5.7.13, Visual Studio 2015. 安装 Connector/Net首先下载MySQL的Net连接器。下载地址为：https://dev.mysql.com/downloads/file/?id=">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2017/06/26/database4/1.jpg">
+<meta property="og:image" content="http://yoursite.com/2017/06/26/database4/2.jpg">
+<meta property="og:image" content="http://yoursite.com/2017/06/26/database4/2-1.jpg">
+<meta property="og:image" content="http://yoursite.com/2017/06/26/database4/3.jpg">
+<meta property="og:image" content="http://yoursite.com/2017/06/26/database4/4.jpg">
+<meta property="og:updated_time" content="2017-07-17T07:31:22.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MySQL 学习笔记（三） C# 调用MySQL数据库">
+<meta name="twitter:description" content="MySQL提供了很多的连接器和API来帮助在不同平台的使用，具体可以查看官方文档Chapter 27 Connectors and APIs 。本文的环境设置：Win7, MySQL 5.7.13, Visual Studio 2015. 安装 Connector/Net首先下载MySQL的Net连接器。下载地址为：https://dev.mysql.com/downloads/file/?id=">
+<meta name="twitter:image" content="http://yoursite.com/2017/06/26/database4/1.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/06/26/database4/">
+
+
+
+
+
+  <title>MySQL 学习笔记（三） C# 调用MySQL数据库 | 葛小野</title>
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">葛小野</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">临渊羡鱼不如退而结网</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/26/database4/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="杨玺彤">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/1.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="葛小野">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">MySQL 学习笔记（三） C# 调用MySQL数据库</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-26T18:21:28+09:00">
+                2017-06-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/DB/" itemprop="url" rel="index">
+                    <span itemprop="name">DB</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>MySQL提供了很多的连接器和API来帮助在不同平台的使用，具体可以查看官方文档<a href="http://https://dev.mysql.com/doc/refman/5.7/en/connectors-apis.html" target="_blank" rel="noopener">Chapter 27 Connectors and APIs</a> 。<br>本文的环境设置：Win7, MySQL 5.7.13, Visual Studio 2015.</p>
+<h4 id="安装-Connector-Net"><a href="#安装-Connector-Net" class="headerlink" title="安装 Connector/Net"></a>安装 Connector/Net</h4><p>首先下载MySQL的Net连接器。<br>下载地址为：<a href="https://dev.mysql.com/downloads/file/?id=463758" target="_blank" rel="noopener">https://dev.mysql.com/downloads/file/?id=463758</a><br>安装后默认地址为：<code>C:\Program Files (x86)\MySQL\MySQL Connector Net 6.9.9\Assemblies</code> ，目录下有两个版本文件夹对应VS不同的版本V4.0(VS2010) 和 V4.5(VS2012/2013/2015)，我选择4.5. 可以在Documentation中发现帮助手册 ConnectorNET.chm。</p>
+<h4 id="C-中添加MySql-Data-dll引用"><a href="#C-中添加MySql-Data-dll引用" class="headerlink" title="C#中添加MySql.Data.dll引用"></a>C#中添加MySql.Data.dll引用</h4><p>新建一个窗体项目。<br><img src="1.jpg" alt=""><br>添加引用V4.5 文件夹下的<code>MySql.Data.dll</code> 。<br><img src="2.jpg" alt=""></p>
+<p><code>MySqlCommand</code> 类： 代表对MySQL数据库进行执行操作的SQL语句。<br><code>MySqlDataAdapter</code> 类： 代表一组数据命令和数据库连接，用于填充数据库和更新MySQL数据库。<br><code>MySqlConnection</code> 类： 代表与MySQL服务器数据库的开放式连接。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">public partial class Form1 : Form &#123;</span><br><span class="line">     </span><br><span class="line">     public Form1()</span><br><span class="line">        &#123;</span><br><span class="line">            InitializeComponent();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">      private void button1_Click(object sender, EventArgs e)</span><br><span class="line">        &#123;</span><br><span class="line">         string connStr = &quot;server=localhost;user=root;database = test;port=3306;password=123456789!;&quot;;</span><br><span class="line">         MySqlConnection conn = new MySqlConnection(connStr);</span><br><span class="line">         </span><br><span class="line">        try &#123;</span><br><span class="line">               label1.Text = &quot;Connecting to MySQL......&quot;;</span><br><span class="line">               Console.WriteLine(&quot;Connecting to MySQL......&quot;);</span><br><span class="line">               conn.Open();</span><br><span class="line"></span><br><span class="line">               string sql = &quot;select * from student&quot;;</span><br><span class="line">               MySqlCommand cmd = new MySqlCommand(sql,conn);</span><br><span class="line"></span><br><span class="line">               MySqlDataAdapter da = new MySqlDataAdapter(cmd);</span><br><span class="line">               DataSet ds = new DataSet();</span><br><span class="line">               da.Fill(ds);</span><br><span class="line">               dataGridView1.DataSource = ds.Tables[0];</span><br><span class="line">               conn.Close();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">          &#125; catch(Exception ex) &#123;</span><br><span class="line">                Console.WriteLine(ex);</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>运行结果：<br><img src="2-1.jpg" alt=""></p>
+<h4 id="C-中添加更新和删除功能"><a href="#C-中添加更新和删除功能" class="headerlink" title="C#中添加更新和删除功能"></a>C#中添加更新和删除功能</h4><p>首先如果要对一个表进行更新修改，这个表一定要有主键。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br></pre></td><td class="code"><pre><span class="line">public partial class Form1 : Form</span><br><span class="line">   &#123;</span><br><span class="line">       public Form1()</span><br><span class="line">       &#123;</span><br><span class="line">           InitializeComponent();</span><br><span class="line">       &#125;</span><br><span class="line">       MySqlDataAdapter da;</span><br><span class="line">       private void button1_Click(object sender, EventArgs e)</span><br><span class="line">       &#123;</span><br><span class="line">           string connStr = string.Format(&quot;server=localhost;user=&#123;0&#125;;database=test;port=3306;password=&#123;1&#125;;&quot; ,textBox1.Text.Trim(),textBox2.Text.Trim());        </span><br><span class="line">           MySqlConnection conn = new MySqlConnection(connStr);</span><br><span class="line">			// 连接到数据库</span><br><span class="line">           try &#123; </span><br><span class="line">           conn.Open();</span><br><span class="line"></span><br><span class="line">           string sql = &quot;select * from student&quot;;</span><br><span class="line">           MySqlCommand comm = new MySqlCommand(sql,conn);</span><br><span class="line"></span><br><span class="line">            da = new MySqlDataAdapter(comm);</span><br><span class="line">               //DataSet ds = new DataSet();</span><br><span class="line">               DataTable dt = new DataTable();</span><br><span class="line">               // da.Fill(ds);</span><br><span class="line">               da.Fill(dt);</span><br><span class="line">               //dataGridView1.DataSource = ds.Tables[0];</span><br><span class="line">               dataGridView1.DataSource = dt;</span><br><span class="line">           &#125;</span><br><span class="line">           catch (Exception ex)</span><br><span class="line">           &#123;</span><br><span class="line">               MessageBox.Show(&quot;connection failed.&quot;);</span><br><span class="line">           &#125;</span><br><span class="line"></span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line"> public void updateSql() &#123;</span><br><span class="line"></span><br><span class="line">		//更新功能</span><br><span class="line">           try &#123; </span><br><span class="line">           DataTable dt = (DataTable)dataGridView1.DataSource;</span><br><span class="line">           MySqlCommandBuilder cmBuilder = new MySqlCommandBuilder(da);</span><br><span class="line">           da.Update(dt);</span><br><span class="line">               MessageBox.Show(&quot;update succeed.&quot;);</span><br><span class="line">           &#125;</span><br><span class="line">           catch (Exception ex)</span><br><span class="line">           &#123;</span><br><span class="line">               MessageBox.Show(&quot;update failed.&quot;);</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">public void deleteSql() &#123;</span><br><span class="line"></span><br><span class="line">	 // 删除功能</span><br><span class="line">           int select_row = dataGridView1.SelectedRows.Count;</span><br><span class="line">           int select_cell = dataGridView1.SelectedCells.Count;</span><br><span class="line">           if (select_cell&gt;0) &#123;</span><br><span class="line">               if (select_row&gt;0) &#123;</span><br><span class="line">                   foreach (DataGridViewRow drow in dataGridView1.SelectedRows) &#123;</span><br><span class="line">                       dataGridView1.Rows.Remove(drow);</span><br><span class="line">                   &#125;</span><br><span class="line">                   MessageBox.Show(&quot;Delete &quot;+select_row+&quot;rows.&quot;,&quot;Success&quot;);</span><br><span class="line">               &#125;</span><br><span class="line">               if (dataGridView1.SelectedCells.Count&gt;0) &#123;</span><br><span class="line">                   ArrayList al = new ArrayList();</span><br><span class="line">                   foreach (DataGridViewCell dcell in dataGridView1.SelectedCells) &#123;</span><br><span class="line">                       if (al.IndexOf(dcell.RowIndex)==-1) &#123;</span><br><span class="line">                           al.Add(dcell.RowIndex);</span><br><span class="line">                       &#125;</span><br><span class="line">                   &#125;</span><br><span class="line"></span><br><span class="line">                   foreach (int number in al) &#123;</span><br><span class="line">                       dataGridView1.Rows.RemoveAt(number);</span><br><span class="line">                   &#125;</span><br><span class="line"></span><br><span class="line">               &#125;             </span><br><span class="line">            </span><br><span class="line">           &#125;      </span><br><span class="line"></span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">private void button2_Click(object sender, EventArgs e)      //更新按钮</span><br><span class="line">       &#123;</span><br><span class="line">           updateSql();       </span><br><span class="line"></span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">private void button3_Click(object sender, EventArgs e)             //删除按钮</span><br><span class="line">       &#123;</span><br><span class="line">           deleteSql();         </span><br><span class="line">           updateSql();</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<p><img src="3.jpg" alt=""><br><img src="4.jpg" alt=""></p>
+<hr>
+<p>[1]. 参考: <a href="https://dev.mysql.com/doc/refman/5.7/en/entering-queries.html" target="_blank" rel="noopener">https://dev.mysql.com/doc/refman/5.7/en/entering-queries.html</a><br>[2]. 参考: <a href="http://blog.csdn.net/liyuqian199695/article/details/53556639" target="_blank" rel="noopener">http://blog.csdn.net/liyuqian199695/article/details/53556639</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>如果觉得对您有帮助，就扫我交个朋友吧！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/2.jpg" alt="杨玺彤 WeChat Pay">
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/3.jpg" alt="杨玺彤 Alipay">
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/DB/" rel="tag"># DB</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/06/25/database3/" rel="next" title="SQL的几种连接：内连接，外连接，交叉连接">
+                <i class="fa fa-chevron-left"></i> SQL的几种连接：内连接，外连接，交叉连接
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/06/28/database6/" rel="prev" title="MySQL 学习笔记（四） C# 中使用 Entity Framework 连接MySQL">
+                MySQL 学习笔记（四） C# 中使用 Entity Framework 连接MySQL <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/1.jpg" alt="杨玺彤">
+          <p class="site-author-name" itemprop="name">杨玺彤</p>
+           
+              <p class="site-description motion-element" itemprop="description">Be better for something</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/2396326053/profile?topnav=1&wvr=6&is_all=1" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/witchyang" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装-Connector-Net"><span class="nav-number">1.</span> <span class="nav-text">安装 Connector/Net</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#C-中添加MySql-Data-dll引用"><span class="nav-number">2.</span> <span class="nav-text">C#中添加MySql.Data.dll引用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#C-中添加更新和删除功能"><span class="nav-number">3.</span> <span class="nav-text">C#中添加更新和删除功能</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">杨玺彤</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

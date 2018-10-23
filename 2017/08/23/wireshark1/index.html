@@ -1,0 +1,913 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="通信,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1">
+
+
+
+
+
+
+<meta name="description" content="OSI七层模型在理解TCP/IP协议之前，先回顾一下OSI（Open System Interconnection Model）模型，是一个由国际标准化组织提出的概念模型，试图提供一个使各种不同的计算机和网络在世界范围内实现互联的标准框架。七层模型由下到上： 物理层负责最后将信息编码成电流脉冲或其他信号用于网上传输。 例如RJ45插头将数据转化成0和1。 数据链路层数据链路层通过物理网络链路提供数">
+<meta name="keywords" content="通信">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Wireshark 和TCP三次握手，四次挥手协议">
+<meta property="og:url" content="http://yoursite.com/2017/08/23/wireshark1/index.html">
+<meta property="og:site_name" content="葛小野">
+<meta property="og:description" content="OSI七层模型在理解TCP/IP协议之前，先回顾一下OSI（Open System Interconnection Model）模型，是一个由国际标准化组织提出的概念模型，试图提供一个使各种不同的计算机和网络在世界范围内实现互联的标准框架。七层模型由下到上： 物理层负责最后将信息编码成电流脉冲或其他信号用于网上传输。 例如RJ45插头将数据转化成0和1。 数据链路层数据链路层通过物理网络链路提供数">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2017/08/23/wireshark1/1.png">
+<meta property="og:image" content="http://yoursite.com/2017/08/23/wireshark1/2.png">
+<meta property="og:image" content="http://yoursite.com/2017/08/23/wireshark1/4.png">
+<meta property="og:image" content="http://yoursite.com/2017/08/23/wireshark1/3.png">
+<meta property="og:image" content="http://yoursite.com/2017/08/23/wireshark1/5.png">
+<meta property="og:image" content="http://yoursite.com/2017/08/23/wireshark1/1.jpg">
+<meta property="og:image" content="http://yoursite.com/2017/08/23/wireshark1/2.jpg">
+<meta property="og:image" content="http://yoursite.com/2017/08/23/wireshark1/6.png">
+<meta property="og:image" content="http://yoursite.com/2017/08/23/wireshark1/7.png">
+<meta property="og:image" content="http://yoursite.com/2017/08/23/wireshark1/8.png">
+<meta property="og:image" content="http://yoursite.com/2017/08/23/wireshark1/9.png">
+<meta property="og:updated_time" content="2017-08-25T04:22:38.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Wireshark 和TCP三次握手，四次挥手协议">
+<meta name="twitter:description" content="OSI七层模型在理解TCP/IP协议之前，先回顾一下OSI（Open System Interconnection Model）模型，是一个由国际标准化组织提出的概念模型，试图提供一个使各种不同的计算机和网络在世界范围内实现互联的标准框架。七层模型由下到上： 物理层负责最后将信息编码成电流脉冲或其他信号用于网上传输。 例如RJ45插头将数据转化成0和1。 数据链路层数据链路层通过物理网络链路提供数">
+<meta name="twitter:image" content="http://yoursite.com/2017/08/23/wireshark1/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/08/23/wireshark1/">
+
+
+
+
+
+  <title>Wireshark 和TCP三次握手，四次挥手协议 | 葛小野</title>
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">葛小野</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">临渊羡鱼不如退而结网</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/23/wireshark1/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="杨玺彤">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/1.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="葛小野">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Wireshark 和TCP三次握手，四次挥手协议</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-23T10:25:03+09:00">
+                2017-08-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/通信/" itemprop="url" rel="index">
+                    <span itemprop="name">通信</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h4 id="OSI七层模型"><a href="#OSI七层模型" class="headerlink" title="OSI七层模型"></a>OSI七层模型</h4><p>在理解TCP/IP协议之前，先回顾一下OSI（Open System Interconnection Model）模型，是一个由国际标准化组织提出的概念模型，试图提供一个使各种不同的计算机和网络在世界范围内实现互联的标准框架。<br>七层模型由下到上：<br><img src="1.png" alt=""></p>
+<h5 id="物理层"><a href="#物理层" class="headerlink" title="物理层"></a>物理层</h5><p>负责最后将信息编码成电流脉冲或其他信号用于网上传输。</p>
+<p>例如RJ45插头将数据转化成0和1。</p>
+<h5 id="数据链路层"><a href="#数据链路层" class="headerlink" title="数据链路层"></a>数据链路层</h5><p>数据链路层通过物理网络链路提供数据传输。不同的数据链路层定义了不同的网络和协议特征，其中包括物理编址，网络拓扑结构，错误校验，数据帧序列以及流控。</p>
+<p>可以简单理解为：规定了0和1的分包形式，确定了网络数据包的形式。</p>
+<h5 id="网络层"><a href="#网络层" class="headerlink" title="网络层"></a>网络层</h5><p>网络层负责在源和终点之间建立连接。</p>
+<p>可以理解为：需要确定计算机的位置。IPV4, IPV6.</p>
+<h5 id="传输层"><a href="#传输层" class="headerlink" title="传输层"></a>传输层</h5><p>传输层向高层提供可靠的端到端的网络数据流服务。</p>
+<p>可以理解为：每一个应用程序都会在网卡注册一个端口号，该层就是端口与端口的通信。常用的TCP/IP协议。</p>
+<h5 id="会话层"><a href="#会话层" class="headerlink" title="会话层"></a>会话层</h5><p>会话层建立，管理和终止表示层与实体之间的通信会话。</p>
+<p>建立一个连接（自动的收集信息，自动的网络寻址）</p>
+<h5 id="表示层"><a href="#表示层" class="headerlink" title="表示层"></a>表示层</h5><p>表示层提供多种功能用于应用层数据编码和转化，以确保以一个系统应用层发送的信息可以被另一个系统应用层识别。</p>
+<p>可以理解为：解决不同系统之间的通信。比如Linux下QQ可以和Window下的QQ通信。</p>
+<h5 id="应用层"><a href="#应用层" class="headerlink" title="应用层"></a>应用层</h5><p>OSI的应用层包括文件的传输，访问，管理协议以及文件虚拟终端协议和公用管理系统信息等。</p>
+<p>规定数据的传输协议。常见的应用层协议有： </p>
+<table>
+<thead>
+<tr>
+<th>协议</th>
+<th>端口</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>HTTP</td>
+<td>80</td>
+<td>超文本传输协议</td>
+</tr>
+<tr>
+<td>HTTPS</td>
+<td>443</td>
+<td>HTTP+SSL, HTTP的安全版</td>
+</tr>
+<tr>
+<td>FTP</td>
+<td>20，21，990</td>
+<td>文件传输协议</td>
+</tr>
+<tr>
+<td>POP3</td>
+<td>110</td>
+<td>邮局协议</td>
+</tr>
+<tr>
+<td>SMTP</td>
+<td>25</td>
+<td>简单邮件传输协议</td>
+</tr>
+<tr>
+<td>telnet</td>
+<td>23</td>
+<td>远程终端协议</td>
+</tr>
+</tbody>
+</table>
+<h4 id="TCP-IP-协议分层"><a href="#TCP-IP-协议分层" class="headerlink" title="TCP/IP 协议分层"></a>TCP/IP 协议分层</h4><p>OSI分层模型的优势就是上层的变动完全不影响下层的结构，因此TCP/IP的设计吸取了分层模型的精华思想——封装。每层对上一次提供服务的时候，上一次的数据结构是黑盒，直接作为本层的数据，而不需要关心上一层协议的细节。<br>TCP/IP分层模型的分层以以太网上传输UDP数据包如图所示：<br> <img src="2.png" alt=""></p>
+<h4 id="数据包"><a href="#数据包" class="headerlink" title="数据包"></a>数据包</h4><p> 每一个数据包都包含”标头”和”数据”两个部分，”标头”包含本数据包的一些说明，”数据”则是本数据包的内容。</p>
+<p> 细分的话：<br>应用程序数据包：标头部分规定应用程序的数据格式，数据部分传输具体的数据内容。</p>
+<p>TCP/UDP数据包： 标头部分包含双方发出端口和接收端口。UDP数据包：‘标头’长度有8个字节。‘数据包’总长度最大为65535字节，正好放进一个IP数据包。TCP数据包：理论上没有长度限制，但是为了保证网络传输效率，通常不会超过IP数据长度，确保单个包不会被分割。</p>
+<p>IP数据包： 标头部分包含通信双方的IP地址，协议版本，长度等信息。‘标头’长度为20～60字节，‘数据包’总长度最大为65535字节。</p>
+<p>以太网数据包：最基础的数据包，标头部分包含了通信双方的MAC地址，数据类型等。‘标头’长度有18字节，‘数据’部分长度46～1500字节。</p>
+<p>现在具体看一下TCP的数据包：<br><img src="4.png" alt=""></p>
+<ol>
+<li>源端口号 Source Port： 数据发起者的端口号，16bit</li>
+<li><p>目的端口号 Destination Port： 数据接收者的端口号，16bit<br> 1,2 用来区分主机中的不同进程，而IP地址是用来区别不同的主机的。源端口号和目的端口号配合上IP首部的源IP地址和目的IP地址就能确定唯一的一个TCP连接。</p>
+</li>
+<li><p>序号 Sequence Number： 32bit的序列号，由发送方使用。用来识别从TCP发端向TCP收端发送的数据字节流，它表示在这个报文段中的第一个数据字节在数据流中的序号，主要用来解决网络报乱序的问题。</p>
+</li>
+<li><p>确认序号 Acknowledgment Number：32bit确认号，是接收数据方期望收到发送方的下一个报文段的序号，因此确认号应当是上次已经成功接收到的数据字节序号加1.  不过只有当标志位中的ACK标志为1时，该确认序列号字段才有效，主要用来解决不丢包的问题。</p>
+</li>
+<li><p>首都长度 Offset： 给出首部中32bit字的数目，需要这个值是因为任选字段的长度是可变的。这个字段占4bit，最多可以表示15×32bit= 60字节的首部。因此TCP最多有60字节的首部，然而，没有任选字段，正常的首部长度为20字节。</p>
+</li>
+<li><p>保留：6bit. 均为0. </p>
+<p>TCP Flags: TCP首部有6个标志比特，他们中多个可以被同时设置为1，主要用于操作TCP的状态机。</p>
+</li>
+<li><p>URG：表示TCP包的紧急指针域有效，用来保证TCP连接不被中断，并且督促中间层设备要尽快处理这些数据。当URG=1时，表示报文段中有紧急数据，应尽快传送。</p>
+</li>
+<li><p>ACK：确认比特。ACK=1时代表这是一个确认的TCP包，为0则不是确认包。</p>
+</li>
+<li><p>PSH: 推送比特，表示PUSH操作。当PSH=1时，数据包到达接收端之后，接收端尽快的交付给应用进程，而不是在缓冲区中排队。</p>
+</li>
+<li><p>RST: 复位比特。用来复位那些产生错误的连接，也被用来拒绝错误和非法的数据包。当RST=1时，表明TCP连接中出现严重差错，必须释放连接，再重新建立连接。</p>
+</li>
+<li><p>SYN: 同步比特。 在建立连接时用来同步序号。SYN标志位和ACK标志位搭配使用。SYN= 1， ACK =0, 表示一个连接请求报文段。SYN = 1，ACK =1 表示同意建立连接。这个标志的数据包经常被用来进行端口扫描。扫描者发送一个只有SYN的数据包，如果对方主机相应了一个数据包回来，则表示这台主机存在这个端口，但是由于这种扫描方式只是进行TCP三次握手的第一次握手，因此这种扫描的成功表示被扫描的机器很不安全。一台安全的主机将会强制要求一个连接严格的进行TCP的三次握手。</p>
+</li>
+<li><p>FIN: 终止比特。FIN =1 时，表示此报文段的发送端的数据已经发送完毕，并要求释放传输协议。发送FIN 标志位的TCP数据包后，连接将被断开。这个标志的数据包也经常被用于进行端口扫描。</p>
+</li>
+<li><p>窗口：用来控制对方发送的数据量，通知发放已确定的发送窗口上限。</p>
+</li>
+<li><p>校验和： 该字段检验的范围包括首部和数据两个部分，由发端计算和存储，并由收端进行验证。</p>
+</li>
+<li><p>紧急指针：紧急指针在URG=1的时候才有效，指出本报文段中的紧急数据的字节数。</p>
+</li>
+<li><p>选项：长度可变，最长可达40字节。</p>
+</li>
+</ol>
+<h4 id="TCP-IP协议族常用协议"><a href="#TCP-IP协议族常用协议" class="headerlink" title="TCP/IP协议族常用协议"></a>TCP/IP协议族常用协议</h4><p>应用层：TFTP, HTTP, SNMP, FTP, SMTP, DNS, Telnet等<br>传输层：TCP, UDP<br>网络层：IP, ICMP, OSPF, EIGRP, IGMP<br>数据链路层：SLIP, CSLIP, PPP, MTU</p>
+<p>TCP（Transmission Control Protocol）, 传输控制协议，可以提供可靠的，面向连接的网络数据传递服务。<br>传输控制协议主要包含下列任务和功能：<br>确保IP数据报的成功传递。<br>对程序发送的大块数据进行分段和重组。<br>确保正确排序及按顺序传递分段的数据。<br>通过计算校验和，进行传输数据的完整性检查。<br>根据数据是否接收成功发送肯定消息。通过使用选择性确认，也对没有收到的数据发送否定确认。</p>
+<p>TCP的工作原理：三次握手，四次挥手。</p>
+<h4 id="三次握手"><a href="#三次握手" class="headerlink" title="三次握手"></a>三次握手</h4><p>TCP是面向连接的，无论哪一方向另一方发送数据之前，都必须先建立一条连接。建立过程称为TCP三次握手，三次握手的目的是同步连接双方的序列号和确认号，并交换TCP窗口大小：</p>
+<p><img src="3.png" alt=""></p>
+<ol>
+<li><p>第一次握手： 建立连接。客户端发送连接请求报文段，将SYN位置为1，Sequence Number 为x，然后，客户端进入SYN_SEND状态，等待服务器的确认。</p>
+</li>
+<li><p>第二次握手： 服务器接收到了客户端发送的SYN报文段，需要对这个SYN报文段进行确认。设置Acknowledgment Number 为 x+1（Sequence Number+1）, 同时，自己还要发送SYN请求信息，将SYN位置为1，Sequence Number 为y，服务器端将上述所有信息放到一个报文段（即 SYN+ACK报文段）中，一并发送到客户端，此时服务器进入SYN_RECV状态。</p>
+</li>
+<li><p>第三次握手： 客户端收到服务器的SYN+ACK报文段，然后将Acknowledgment Number 设置为 y+1, 向服务器发送ACK报文段，这个报文段发送完毕后，客户端和服务器端都进入ESTABLISHED状态，完成TCP三次握手。</p>
+</li>
+</ol>
+<h4 id="四次挥手"><a href="#四次挥手" class="headerlink" title="四次挥手"></a>四次挥手</h4><p>当客户端和服务器通过三次握手建立了TCP连接之后，当数据传送完毕，就需要断开TCP连接，此过程就是四次挥手：</p>
+<ol>
+<li><p>第一次挥手：主机1（也可以是客户端，也可以是服务器端），设置Sequence Number 和Acknowledgment Number , 向主机2 发送一个FIN 报文段。 此时，主机1进入FIN_WAIT_1 状态，表示此时主机1 没有数据要发送向主机2 了。</p>
+</li>
+<li><p>第二次挥手：主机2收到主机1发送的FIN报文段，向主机1回复一个ACK报文段，Acknowledgment Number 为 Sequence Number +1，主机1进入FIN_WAIT_2状态；意味着主机2告诉主角1，”同意” 关闭请求。</p>
+</li>
+<li><p>第三次挥手：主机2 向 主机1发送FIN报文段，请求关闭连接，同时主机2进入LAST_ACK状态。</p>
+</li>
+<li><p>第四次挥手：主机1收到主机2发生的FIN报文段，向主机2发送ACK报文段。然后主机1 进入TIME_WAIT状态；主机2 收到主机1 的ACK报文段以后，就关闭连接；此时主机1等待2MSL后依然没有收到回复，则证明服务端已经正常关闭。之后主机1 也关闭。</p>
+</li>
+</ol>
+<h4 id="什么是Wireshark"><a href="#什么是Wireshark" class="headerlink" title="什么是Wireshark"></a>什么是Wireshark</h4><p>Wireshark 是开源的网络封包分析软件，功能十分强大。可以截取各种网络封包，显示网络封包的详细信息。<br>为了安全考虑，wireshark只能查看封包，而不能修改封包的内容，或发送封包。<br>wireshark的下载地址为：  <a href="https://www.wireshark.org/" target="_blank" rel="noopener">https://www.wireshark.org/</a></p>
+<p>wireshark界面组成<br><img src="5.png" alt=""></p>
+<p>封包详细信息里面，可以查看协议中的每一个字段：</p>
+<p><img src="1.jpg" alt=""><br>Frame:   物理层的数据帧概况<br>Etgernet II:   数据链路层以太网帧头部信息<br>Internet Protocol Version 4: 互联网层IP包头部信息<br>Transimission Control Protocol :  传输层T的数据段头部信息，此处是TCP<br>Hypertext Transfer Protocol:  应用层的信息，此处是HTTP协议</p>
+<p>现在我们从Wireshark 抓取到的数据包中，理解一下三次握手，四次挥手过程。</p>
+<p>选中开始抓包之后，打开浏览器浏览一下网页。<br>在过滤器中输入http过滤，然后选中GET / HTTP /1.1 这条记录，右键“Follow TCP Stream”，可以得到与浏览器打开网站相关的数据包：<br>可以发现 截获了三次握手的三个数据包，第四个数据包才是HTTP的，这说明HTTP确实是使用TCP建立连接的。<br><img src="2.jpg" alt=""></p>
+<p>第一次握手。客户端发送了一个TCP， 标志位为SYN，序列号为0，客户端请求建立连接。<br><img src="6.png" alt=""></p>
+<p>第二次握手。服务器发回确认包，标志位为SYN,ACK，确认序列号为刚刚的请求序列号+1。<br><img src="7.png" alt=""></p>
+<p>第三次握手。客户端再次发送确认包.<br><img src="8.png" alt=""></p>
+<p>现在看最后的结束连接过程。<br><img src="9.png" alt=""></p>
+<hr>
+<p>参考资料</p>
+<ol>
+<li><a href="http://www.cnblogs.com/TankXiao/archive/2012/10/10/2711777.html" target="_blank" rel="noopener">http://www.cnblogs.com/TankXiao/archive/2012/10/10/2711777.html</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/21761992" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/21761992</a></li>
+<li><a href="http://www.cnblogs.com/janey/p/5961534.html" target="_blank" rel="noopener">http://www.cnblogs.com/janey/p/5961534.html</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>如果觉得对您有帮助，就扫我交个朋友吧！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/2.jpg" alt="杨玺彤 WeChat Pay">
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/3.jpg" alt="杨玺彤 Alipay">
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/通信/" rel="tag"># 通信</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/08/18/Korea-Grammer/" rel="next" title="韩语KIIP 考试中级语法整理">
+                <i class="fa fa-chevron-left"></i> 韩语KIIP 考试中级语法整理
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/09/26/tip1/" rel="prev" title="Eclipse 导入web 项目无法部署">
+                Eclipse 导入web 项目无法部署 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/1.jpg" alt="杨玺彤">
+          <p class="site-author-name" itemprop="name">杨玺彤</p>
+           
+              <p class="site-description motion-element" itemprop="description">Be better for something</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/2396326053/profile?topnav=1&wvr=6&is_all=1" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/witchyang" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#OSI七层模型"><span class="nav-number">1.</span> <span class="nav-text">OSI七层模型</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#物理层"><span class="nav-number">1.1.</span> <span class="nav-text">物理层</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#数据链路层"><span class="nav-number">1.2.</span> <span class="nav-text">数据链路层</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#网络层"><span class="nav-number">1.3.</span> <span class="nav-text">网络层</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#传输层"><span class="nav-number">1.4.</span> <span class="nav-text">传输层</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#会话层"><span class="nav-number">1.5.</span> <span class="nav-text">会话层</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#表示层"><span class="nav-number">1.6.</span> <span class="nav-text">表示层</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#应用层"><span class="nav-number">1.7.</span> <span class="nav-text">应用层</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#TCP-IP-协议分层"><span class="nav-number">2.</span> <span class="nav-text">TCP/IP 协议分层</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数据包"><span class="nav-number">3.</span> <span class="nav-text">数据包</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#TCP-IP协议族常用协议"><span class="nav-number">4.</span> <span class="nav-text">TCP/IP协议族常用协议</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#三次握手"><span class="nav-number">5.</span> <span class="nav-text">三次握手</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#四次挥手"><span class="nav-number">6.</span> <span class="nav-text">四次挥手</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#什么是Wireshark"><span class="nav-number">7.</span> <span class="nav-text">什么是Wireshark</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">杨玺彤</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
