@@ -364,17 +364,17 @@
 <h5 id="部署-Hexo-静态页面到-GitHub-Pages"><a href="#部署-Hexo-静态页面到-GitHub-Pages" class="headerlink" title="部署 Hexo 静态页面到 GitHub Pages"></a>部署 Hexo 静态页面到 GitHub Pages</h5><h6 id="修改-Hexo-目录下的-config-yml-的-部署属性"><a href="#修改-Hexo-目录下的-config-yml-的-部署属性" class="headerlink" title="修改 Hexo 目录下的 _config.yml 的 部署属性"></a>修改 Hexo 目录下的 _config.yml 的 部署属性</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: git@github.com:XXX(username)/XXX(username).github.io.git</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure>
 <p>在 git shell 中执行  <code>$ hexo d</code> 完成部署</p>
 <h6 id="或者可以使用git-命令通过clone-刚才建立的库来完成部署。"><a href="#或者可以使用git-命令通过clone-刚才建立的库来完成部署。" class="headerlink" title="或者可以使用git 命令通过clone 刚才建立的库来完成部署。"></a>或者可以使用git 命令通过clone 刚才建立的库来完成部署。</h6><p>clone github repo</p>
-<pre><code>$ cd c:/Hexo
-$ git clone https://github.com/witchyang/witchyang.github.io.git ./deploy/witchyang.github.io
+<pre><code>    $ cd c:/Hexo
+    $ git clone https://github.com/witchyang/witchyang.github.io.git ./deploy/witchyang.github.io
 </code></pre><p>此时将发现在Hexo目录下已经新建了一个.deploy目录， 里面是克隆的刚建立的github page.</p>
 <h6 id="部署hexo到github-原理"><a href="#部署hexo到github-原理" class="headerlink" title="部署hexo到github 原理"></a>部署hexo到github 原理</h6><p>在C:\Hexo\source_posts 下编写.md的markdown 格式博客文本。hexo genarate 生成后，将在public文件夹下产生新内容，将其拷贝至 witchyang.github.io 的本地git目录下，然后使用git commit 命令提交至该博客库repo的master 分支下。</p>
 <p>为了方便以上思想实施，在 c：/Hexo目录下创建一个deploy.sh脚本, 每次提交部署时执行该脚本，按提示输入github的用户名和密码，即部署新博文成功。<br>代码如下：</p>
-<pre><code>hexo generate
-cp -R public/* .deploy/witchyang.github.io
-cd ./deploy/witchyang.github.io
-git add .
-git commit - m &quot;update&quot;
-git push origin master
+<pre><code>    hexo generate
+    cp -R public/* .deploy/witchyang.github.io
+    cd ./deploy/witchyang.github.io
+    git add .
+    git commit - m &quot;update&quot;
+    git push origin master
 </code></pre><p>以上。</p>
 <hr>
 <p>[1]: 参考 <a href="https://linghucong.js.org/2016/04/15/2016-04-15-hexo-github-pages-blog/" target="_blank" rel="noopener">https://linghucong.js.org/2016/04/15/2016-04-15-hexo-github-pages-blog/</a></p>

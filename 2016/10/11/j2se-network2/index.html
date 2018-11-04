@@ -90,18 +90,18 @@
 
 
 
-<meta name="description" content="用套接字Socket来实现不同虚拟机或不同计算机间的通信，本文将通过编写客户端和服务器端来创建套接字通信。 ####Socket 概念  在C/S结构的软件体系中，需要一个服务端的程序，它能够与众多客户端相连接，从而互相之间传递一些数据。在计算机系统中，两个进程之间如果要进行通信，基本条件便是在系统中可以标示唯一的一个进程。所以人们发明了进程标示符PID来标示在本地的唯一进程。  1PID（Pro">
+<meta name="description" content="用套接字Socket来实现不同虚拟机或不同计算机间的通信，本文将通过编写客户端和服务器端来创建套接字通信。 Socket 概念  在C/S结构的软件体系中，需要一个服务端的程序，它能够与众多客户端相连接，从而互相之间传递一些数据。在计算机系统中，两个进程之间如果要进行通信，基本条件便是在系统中可以标示唯一的一个进程。所以人们发明了进程标示符PID来标示在本地的唯一进程。  1PID（Process">
 <meta name="keywords" content="J2SE">
 <meta property="og:type" content="article">
 <meta property="og:title" content="J2SE 网络通信（二）-Socket编程">
 <meta property="og:url" content="http://yoursite.com/2016/10/11/j2se-network2/index.html">
 <meta property="og:site_name" content="葛小野">
-<meta property="og:description" content="用套接字Socket来实现不同虚拟机或不同计算机间的通信，本文将通过编写客户端和服务器端来创建套接字通信。 ####Socket 概念  在C/S结构的软件体系中，需要一个服务端的程序，它能够与众多客户端相连接，从而互相之间传递一些数据。在计算机系统中，两个进程之间如果要进行通信，基本条件便是在系统中可以标示唯一的一个进程。所以人们发明了进程标示符PID来标示在本地的唯一进程。  1PID（Pro">
+<meta property="og:description" content="用套接字Socket来实现不同虚拟机或不同计算机间的通信，本文将通过编写客户端和服务器端来创建套接字通信。 Socket 概念  在C/S结构的软件体系中，需要一个服务端的程序，它能够与众多客户端相连接，从而互相之间传递一些数据。在计算机系统中，两个进程之间如果要进行通信，基本条件便是在系统中可以标示唯一的一个进程。所以人们发明了进程标示符PID来标示在本地的唯一进程。  1PID（Process">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2016-10-18T00:55:46.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="J2SE 网络通信（二）-Socket编程">
-<meta name="twitter:description" content="用套接字Socket来实现不同虚拟机或不同计算机间的通信，本文将通过编写客户端和服务器端来创建套接字通信。 ####Socket 概念  在C/S结构的软件体系中，需要一个服务端的程序，它能够与众多客户端相连接，从而互相之间传递一些数据。在计算机系统中，两个进程之间如果要进行通信，基本条件便是在系统中可以标示唯一的一个进程。所以人们发明了进程标示符PID来标示在本地的唯一进程。  1PID（Pro">
+<meta name="twitter:description" content="用套接字Socket来实现不同虚拟机或不同计算机间的通信，本文将通过编写客户端和服务器端来创建套接字通信。 Socket 概念  在C/S结构的软件体系中，需要一个服务端的程序，它能够与众多客户端相连接，从而互相之间传递一些数据。在计算机系统中，两个进程之间如果要进行通信，基本条件便是在系统中可以标示唯一的一个进程。所以人们发明了进程标示符PID来标示在本地的唯一进程。  1PID（Process">
 
 
 
@@ -351,7 +351,7 @@
 
       
         <p>用套接字Socket来实现不同虚拟机或不同计算机间的通信，本文将通过编写客户端和服务器端来创建套接字通信。</p>
-<p>####Socket 概念<br>  在C/S结构的软件体系中，需要一个服务端的程序，它能够与众多客户端相连接，从而互相之间传递一些数据。在计算机系统中，两个进程之间如果要进行通信，基本条件便是在系统中可以标示唯一的一个进程。所以人们发明了进程标示符PID来标示在本地的唯一进程。<br>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PID（Process Identification）是指操作系统里的进程识别号，也就是进程标识符。</span><br></pre></td></tr></table></figure></p>
+<h4 id="Socket-概念"><a href="#Socket-概念" class="headerlink" title="Socket 概念"></a>Socket 概念</h4><p>  在C/S结构的软件体系中，需要一个服务端的程序，它能够与众多客户端相连接，从而互相之间传递一些数据。在计算机系统中，两个进程之间如果要进行通信，基本条件便是在系统中可以标示唯一的一个进程。所以人们发明了进程标示符PID来标示在本地的唯一进程。<br>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PID（Process Identification）是指操作系统里的进程识别号，也就是进程标识符。</span><br></pre></td></tr></table></figure></p>
 <p>  PID只是在本地系统（单机）中是唯一的。在网络中，任意两个进程的PID存在重复的可能性很大，这将引发冲突。网络层的IP地址可以标示网络中的一台主机，而应用层的一些协议和端口号可以标示这个主机中的进程。因此，我们就能够结合IP地址、相应的协议及其端口号来标示网络中的某个进程。</p>
 <p>有了这个理论基础，进程之间就能够通过套接字socket来进行通信。那么，什么是socket？</p>
 <blockquote>
@@ -479,8 +479,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image" src="/images/1.jpg" alt="杨玺彤">
           <p class="site-author-name" itemprop="name">杨玺彤</p>
@@ -560,6 +569,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Socket-概念"><span class="nav-number">1.</span> <span class="nav-text">Socket 概念</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

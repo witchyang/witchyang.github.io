@@ -428,6 +428,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">mysql&gt;  select * from student where name like &apos;_____&apos;;</span><br><span class="line"></span><br><span class="line">+-------+---------+------+------------+</span><br><span class="line"></span><br><span class="line">| name  | parents | sex  | birth      |</span><br><span class="line"></span><br><span class="line">+-------+---------+------+------------+</span><br><span class="line"></span><br><span class="line">| LILEI |  JAY    | M    | 1998-07-23 |</span><br><span class="line"></span><br><span class="line">+-------+---------+------+------------+</span><br><span class="line"></span><br><span class="line">1 row in set (0.00 sec)</span><br></pre></td></tr></table></figure>
 <h6 id="正则表达式"><a href="#正则表达式" class="headerlink" title="正则表达式"></a>正则表达式</h6><p>MySQL允许使用<code>REGEXP</code> ，<code>RLIKE</code> 运算符在SQL中匹配模式，否定形式为<code>NOT REGEXP</code> ，<code>NOT RLIKE</code>。</p>
 <p>正则表达式中一些常用通配符和对应操作。</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -453,7 +454,7 @@
 <td style="text-align:left">匹配方括号中的任何字符</td>
 </tr>
 <tr>
-<td style="text-align:center">[^…]</td>
+<td style="text-align:center"><sup><a href="#fn_..." id="reffn_...">...</a></sup></td>
 <td style="text-align:left">匹配非方括号中的任何字符</td>
 </tr>
 <tr>
@@ -478,6 +479,7 @@
 </tr>
 </tbody>
 </table>
+</div>
 <p>可以用破折号表示某一范围，例如<code>REGEXP &#39;[A-Z]&#39;</code>匹配任何字母，<code>REGEXP &#39;[0-9]&#39;</code>匹配任何数字。</p>
 <p>例如，含有零个或多个W的字符。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">mysql&gt;  select * from student where name REGEXP &apos;W*&apos;;</span><br><span class="line"></span><br><span class="line">+-----------+---------+------+------------+</span><br><span class="line"></span><br><span class="line">| name      | parents | sex  | birth      |</span><br><span class="line"></span><br><span class="line">+-----------+---------+------+------------+</span><br><span class="line"></span><br><span class="line">| LILEI     |  JAY    | M    | 1998-07-23 |</span><br><span class="line"></span><br><span class="line">| HANMEIMEI | NULL    | M    | 1996-12-12 |</span><br><span class="line"></span><br><span class="line">| ZHANGSAN  | Jone    | F    | 1997-07-23 |</span><br><span class="line"></span><br><span class="line">| WANGMING  | JANE    | M    | 2012-03-24 |</span><br><span class="line"></span><br><span class="line">         | NULL    | NULL | NULL       |</span><br><span class="line"></span><br><span class="line">| JIANGWANG | JIANGLI | F    | 2010-05-23 |</span><br><span class="line"></span><br><span class="line">+-----------+---------+------+------------+</span><br><span class="line"></span><br><span class="line">6 rows in set (0.00 sec)</span><br></pre></td></tr></table></figure>
