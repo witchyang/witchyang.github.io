@@ -90,22 +90,22 @@
 
 
 
-<meta name="description" content="过拟合的问题 T{ {he Problem of Overfitting到现在为止，我们已经学习了几种不同的学习算法，包括线性回归和逻辑回归，它们能够有效地解决许多问题，但是当将它们应用到某些特定的机器学习应用时，会遇到过拟合(over-fitting)的问题，可能会导致它们效果很差。  就以多项式理解，$x$ 的次数越高，拟合的越好，但相应的预测的能力就可能变差。 如果我们发现了过拟合问题，应该">
+<meta name="description" content="过拟合的问题 Problem of Overfitting到现在为止，我们已经学习了几种不同的学习算法，包括线性回归和逻辑回归，它们能够有效地解决许多问题，但是当将它们应用到某些特定的机器学习应用时，会遇到过拟合(over-fitting)的问题，可能会导致它们效果很差。  就以多项式理解，$x$ 的次数越高，拟合的越好，但相应的预测的能力就可能变差。 如果我们发现了过拟合问题，应该如何处理？">
 <meta name="keywords" content="ML">
 <meta property="og:type" content="article">
 <meta property="og:title" content="正则化(Regularization)">
 <meta property="og:url" content="http://yoursite.com/2018/02/25/week3-2/index.html">
 <meta property="og:site_name" content="葛小野">
-<meta property="og:description" content="过拟合的问题 T{ {he Problem of Overfitting到现在为止，我们已经学习了几种不同的学习算法，包括线性回归和逻辑回归，它们能够有效地解决许多问题，但是当将它们应用到某些特定的机器学习应用时，会遇到过拟合(over-fitting)的问题，可能会导致它们效果很差。  就以多项式理解，$x$ 的次数越高，拟合的越好，但相应的预测的能力就可能变差。 如果我们发现了过拟合问题，应该">
+<meta property="og:description" content="过拟合的问题 Problem of Overfitting到现在为止，我们已经学习了几种不同的学习算法，包括线性回归和逻辑回归，它们能够有效地解决许多问题，但是当将它们应用到某些特定的机器学习应用时，会遇到过拟合(over-fitting)的问题，可能会导致它们效果很差。  就以多项式理解，$x$ 的次数越高，拟合的越好，但相应的预测的能力就可能变差。 如果我们发现了过拟合问题，应该如何处理？">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/2018/02/25/week3-2/1.jpeg">
 <meta property="og:image" content="http://yoursite.com/2018/02/25/week3-2/2.jpeg">
 <meta property="og:image" content="http://yoursite.com/2018/02/25/week3-2/3.jpeg">
 <meta property="og:image" content="http://yoursite.com/2018/02/25/week3-2/4.jpeg">
-<meta property="og:updated_time" content="2018-11-04T05:23:49.974Z">
+<meta property="og:updated_time" content="2018-11-04T05:29:00.260Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="正则化(Regularization)">
-<meta name="twitter:description" content="过拟合的问题 T{ {he Problem of Overfitting到现在为止，我们已经学习了几种不同的学习算法，包括线性回归和逻辑回归，它们能够有效地解决许多问题，但是当将它们应用到某些特定的机器学习应用时，会遇到过拟合(over-fitting)的问题，可能会导致它们效果很差。  就以多项式理解，$x$ 的次数越高，拟合的越好，但相应的预测的能力就可能变差。 如果我们发现了过拟合问题，应该">
+<meta name="twitter:description" content="过拟合的问题 Problem of Overfitting到现在为止，我们已经学习了几种不同的学习算法，包括线性回归和逻辑回归，它们能够有效地解决许多问题，但是当将它们应用到某些特定的机器学习应用时，会遇到过拟合(over-fitting)的问题，可能会导致它们效果很差。  就以多项式理解，$x$ 的次数越高，拟合的越好，但相应的预测的能力就可能变差。 如果我们发现了过拟合问题，应该如何处理？">
 <meta name="twitter:image" content="http://yoursite.com/2018/02/25/week3-2/1.jpeg">
 
 
@@ -355,7 +355,7 @@
       
 
       
-        <h3 id="过拟合的问题-T-he-Problem-of-Overfitting"><a href="#过拟合的问题-T-he-Problem-of-Overfitting" class="headerlink" title="过拟合的问题 T{ {he Problem of Overfitting"></a>过拟合的问题 T{ {he Problem of Overfitting</h3><p>到现在为止，我们已经学习了几种不同的学习算法，包括线性回归和逻辑回归，它们能够有效地解决许多问题，但是当将它们应用到某些特定的机器学习应用时，会遇到过拟合(<strong>over-fitting</strong>)的问题，可能会导致它们效果很差。</p>
+        <h3 id="过拟合的问题-Problem-of-Overfitting"><a href="#过拟合的问题-Problem-of-Overfitting" class="headerlink" title="过拟合的问题 Problem of Overfitting"></a>过拟合的问题 Problem of Overfitting</h3><p>到现在为止，我们已经学习了几种不同的学习算法，包括线性回归和逻辑回归，它们能够有效地解决许多问题，但是当将它们应用到某些特定的机器学习应用时，会遇到过拟合(<strong>over-fitting</strong>)的问题，可能会导致它们效果很差。</p>
 <p><img src="1.jpeg" alt=""></p>
 <p>就以多项式理解，$x$ 的次数越高，拟合的越好，但相应的预测的能力就可能变差。</p>
 <p>如果我们发现了过拟合问题，应该如何处理？</p>
@@ -626,7 +626,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#过拟合的问题-T-he-Problem-of-Overfitting"><span class="nav-number">1.</span> <span class="nav-text">过拟合的问题 T{ {he Problem of Overfitting</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代价函数-Cost-Function"><span class="nav-number">2.</span> <span class="nav-text">代价函数  Cost Function</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#正则化线性回归-Regularized-Linear-Regression"><span class="nav-number">3.</span> <span class="nav-text">正则化线性回归 Regularized Linear Regression</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#正则化的逻辑回归模型-Regularized-Logistic-Regression"><span class="nav-number">4.</span> <span class="nav-text">正则化的逻辑回归模型 Regularized Logistic Regression</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#过拟合的问题-Problem-of-Overfitting"><span class="nav-number">1.</span> <span class="nav-text">过拟合的问题 Problem of Overfitting</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代价函数-Cost-Function"><span class="nav-number">2.</span> <span class="nav-text">代价函数  Cost Function</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#正则化线性回归-Regularized-Linear-Regression"><span class="nav-number">3.</span> <span class="nav-text">正则化线性回归 Regularized Linear Regression</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#正则化的逻辑回归模型-Regularized-Logistic-Regression"><span class="nav-number">4.</span> <span class="nav-text">正则化的逻辑回归模型 Regularized Logistic Regression</span></a></li></ol></div>
             
 
           </div>
