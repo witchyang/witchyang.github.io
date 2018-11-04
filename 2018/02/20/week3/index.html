@@ -102,7 +102,11 @@
 <meta property="og:image" content="http://yoursite.com/2018/02/20/week3/2.jpeg">
 <meta property="og:image" content="http://yoursite.com/2018/02/20/week3/3.jpeg">
 <meta property="og:image" content="http://yoursite.com/2018/02/20/week3/4.jpeg">
-<meta property="og:updated_time" content="2018-11-04T04:41:45.671Z">
+<meta property="og:image" content="http://yoursite.com/2018/02/20/week3/5.jpeg">
+<meta property="og:image" content="http://yoursite.com/2018/02/20/week3/5-1.jpeg">
+<meta property="og:image" content="http://yoursite.com/2018/02/20/week3/6.jpeg">
+<meta property="og:image" content="http://yoursite.com/2018/02/20/week3/7.jpeg">
+<meta property="og:updated_time" content="2018-11-04T04:47:55.896Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="逻辑回归(Logistic Regression)">
 <meta name="twitter:description" content="分类问题 Classification在分类问题中，你要预测的变量 $y$ 是离散的值，我们将学习一种叫做逻辑回归 (Logistic Regression) 的算法，这是目前最流行使用最广泛的一种学习算法。 在分类问题中，我们尝试预测的是结果是否属于某一个类（例如正确或错误）。分类问题的例子有：判断一封电子邮件是否是垃圾邮件；判断一次金融交易是否是欺诈；之前我们也谈到了肿瘤分类问题的例子，区别一">
@@ -397,6 +401,17 @@
 <p>所以：<br>$\frac{\partial }{\partial {\theta_{j}}}J\left( \theta  \right)=\frac{\partial }{\partial {\theta_{j}}}[-\frac{1}{m}\sum\limits_{i=1}^{m}{[-{ {y}^{(i)}}\log \left( 1+{ {e}^{-{\theta^{T}}{ {x}^{(i)}}}} \right)-\left( 1-{ {y}^{(i)}} \right)\log \left( 1+{ {e}^{ {\theta^{T}}{ {x}^{(i)}}}} \right)]}]$<br>$=-\frac{1}{m}\sum\limits_{i=1}^{m}{[-{ {y}^{(i)}}\frac{-x_{j}^{(i)}{ {e}^{-{\theta^{T}}{ {x}^{(i)}}}}}{1+{ {e}^{-{\theta^{T}}{ {x}^{(i)}}}}}-\left( 1-{ {y}^{(i)}} \right)\frac{x_j^{(i)}{ {e}^{ {\theta^T}{ {x}^{(i)}}}}}{1+{ {e}^{ {\theta^T}{ {x}^{(i)}}}}}}]$<br>$=-\frac{1}{m}\sum\limits_{i=1}^{m}{ {y}^{(i)}}\frac{x_j^{(i)}}{1+{ {e}^{ {\theta^T}{ {x}^{(i)}}}}}-\left( 1-{ {y}^{(i)}} \right)\frac{x_j^{(i)}{ {e}^{ {\theta^T}{ {x}^{(i)}}}}}{1+{ {e}^{ {\theta^T}{ {x}^{(i)}}}}}]$<br>$=-\frac{1}{m}\sum\limits_{i=1}^{m}{\frac{ { {y}^{(i)}}x_j^{(i)}-x_j^{(i)}{ {e}^{ {\theta^T}{ {x}^{(i)}}}}+{ {y}^{(i)}}x_j^{(i)}{ {e}^{ {\theta^T}{ {x}^{(i)}}}}}{1+{ {e}^{ {\theta^T}{ {x}^{(i)}}}}}}$<br>$=-\frac{1}{m}\sum\limits_{i=1}^{m}{\frac{ { {y}^{(i)}}\left( 1\text{+}{ {e}^{ {\theta^T}{ {x}^{(i)}}}} \right)-{ {e}^{ {\theta^T}{ {x}^{(i)}}}}}{1+{ {e}^{ {\theta^T}{ {x}^{(i)}}}}}x_j^{(i)}}$<br>$=-\frac{1}{m}\sum\limits_{i=1}^{m}{({ {y}^{(i)}}-\frac{ { {e}^{ {\theta^T}{ {x}^{(i)}}}}}{1+{ {e}^{ {\theta^T}{ {x}^{(i)}}}}})x_j^{(i)}}$<br>$=-\frac{1}{m}\sum\limits_{i=1}^{m}{({ {y}^{(i)}}-\frac{1}{1+{ {e}^{-{\theta^T}{ {x}^{(i)}}}}})x_j^{(i)}}$<br>$=-\frac{1}{m}\sum\limits_{i=1}^{m}{[{ {y}^{(i)}}-{h_\theta}\left( { {x}^{(i)}} \right)]x_j^{(i)}}$<br>$=\frac{1}{m}\sum\limits_{i=1}^{m}{[{h_\theta}\left( { {x}^{(i)}} \right)-{ {y}^{(i)}}]x_j^{(i)}}$</p>
 <p>注：虽然得到的梯度下降算法表面上看上去与线性回归的梯度下降算法一样，但是这里的${h_\theta}\left( x \right)=g\left( {\theta^T}X \right)$与线性回归中不同，所以实际上是不一样的。另外，在运行梯度下降算法之前，进行特征缩放依旧是非常必要的。</p>
 <p>一些梯度下降算法之外的选择：<br>除了梯度下降算法以外，还有一些常被用来令代价函数最小的算法，这些算法更加复杂和优越，而且通常不需要人工选择学习率，通常比梯度下降算法要更加快速。这些算法有：<strong>共轭梯度</strong>（<strong>Conjugate Gradient</strong>），<strong>局部优化法</strong>(<strong>Broyden fletcher goldfarb shann,BFGS</strong>)和<strong>有限内存局部优化法</strong>(<strong>LBFGS</strong>)。</p>
+<h3 id="简化的成本函数和梯度下降-Simplified-Cost-Function-and-Gradient-Descent"><a href="#简化的成本函数和梯度下降-Simplified-Cost-Function-and-Gradient-Descent" class="headerlink" title="简化的成本函数和梯度下降  Simplified Cost Function and Gradient Descent"></a>简化的成本函数和梯度下降  Simplified Cost Function and Gradient Descent</h3><p>我们将会找出一种稍微简单一点的方法来写代价函数，来替换我们现在用的方法。同时我们还要弄清楚如何运用梯度下降法，来拟合出逻辑回归的参数。</p>
+<p><img src="5.jpeg" alt=""></p>
+<p><img src="5-1.jpeg" alt=""></p>
+<h3 id="高级优化-Advanced-Optimization"><a href="#高级优化-Advanced-Optimization" class="headerlink" title="高级优化 Advanced Optimization"></a>高级优化 Advanced Optimization</h3><p>我们讨论了用梯度下降的方法最小化逻辑回归中代价函数$J\left( \theta  \right)$。现在学习一些高级优化算法和一些高级的优化概念，利用这些方法，我们就能够使通过梯度下降，进行逻辑回归的速度大大提高，而这也将使算法更加适合解决大型的机器学习问题，比如，我们有数目庞大的特征量。<br>现在我们换个角度来看什么是梯度下降，我们有个代价函数$J\left( \theta  \right)$，而我们想要使其最小化，那么我们需要做的是编写代码，当输入参数 $\theta$ 时，它们会计算出两样东西：$J\left( \theta  \right)$ 以及$J$ 等于 0、1直到 $n$ 时的偏导数项。</p>
+<p><img src="6.jpeg" alt=""></p>
+<h3 id="多类别分类：一对多-Multiclass-Classification-One-vs-all"><a href="#多类别分类：一对多-Multiclass-Classification-One-vs-all" class="headerlink" title="多类别分类：一对多 Multiclass Classification_ One-vs-all"></a>多类别分类：一对多 Multiclass Classification_ One-vs-all</h3><p>我们将谈到如何使用逻辑回归 (<strong>logistic regression</strong>)来解决多类别分类问题，具体来说，我想通过一个叫做”一对多” (<strong>one-vs-all</strong>) 的分类算法。</p>
+<p><img src="7.jpeg" alt=""></p>
+<p>我们将多个类中的一个类标记为正向类（$y=1$），然后将其他所有类都标记为负向类，这个模型记作$h_\theta^{\left( 1 \right)}\left( x \right)$。接着，类似地第我们选择另一个类标记为正向类（$y=2$），再将其它类都标记为负向类，将这个模型记作 $h_\theta^{\left( 2 \right)}\left( x \right)$,依此类推。<br>最后我们得到一系列的模型简记为： $h_\theta^{\left( i \right)}\left( x \right)=p\left( y=i|x;\theta  \right)$其中：$i=\left( 1,2,3….k \right)$ </p>
+<p>最后，在我们需要做预测时，我们将所有的分类机都运行一遍，然后对每一个输入变量，都选择最高可能性的输出变量。</p>
+<p>总之，我们已经把要做的做完了，现在要做的就是训练这个逻辑回归分类器：$h_\theta^{\left( i \right)}\left( x \right)$， 其中 $i$ 对应每一个可能的 $y=i$，最后，为了做出预测，我们给出输入一个新的 $x$ 值，用这个做预测。我们要做的就是在我们三个分类器里面输入 $x$，然后我们选择一个让 $h_\theta^{\left( i \right)}\left( x \right)$ 最大的$ i$，即$\mathop{\max}\limits_i\,h_\theta^{\left( i \right)}\left( x \right)$。</p>
+<p>选择出哪一个分类器是可信度最高效果最好的，那么就可认为得到一个正确的分类，无论$i$值是多少，我们都有最高的概率值，我们预测$y$就是那个值。</p>
 
       
     </div>
@@ -619,7 +634,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#分类问题-Classification"><span class="nav-number">1.</span> <span class="nav-text">分类问题 Classification</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#假说表示-Hypothesis-Representation"><span class="nav-number">2.</span> <span class="nav-text">假说表示 Hypothesis Representation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#判定边界-Decision-Boundary"><span class="nav-number">3.</span> <span class="nav-text">判定边界 Decision Boundary</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代价函数-Cost-Function"><span class="nav-number">4.</span> <span class="nav-text">代价函数  Cost Function</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#分类问题-Classification"><span class="nav-number">1.</span> <span class="nav-text">分类问题 Classification</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#假说表示-Hypothesis-Representation"><span class="nav-number">2.</span> <span class="nav-text">假说表示 Hypothesis Representation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#判定边界-Decision-Boundary"><span class="nav-number">3.</span> <span class="nav-text">判定边界 Decision Boundary</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代价函数-Cost-Function"><span class="nav-number">4.</span> <span class="nav-text">代价函数  Cost Function</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#简化的成本函数和梯度下降-Simplified-Cost-Function-and-Gradient-Descent"><span class="nav-number">5.</span> <span class="nav-text">简化的成本函数和梯度下降  Simplified Cost Function and Gradient Descent</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#高级优化-Advanced-Optimization"><span class="nav-number">6.</span> <span class="nav-text">高级优化 Advanced Optimization</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多类别分类：一对多-Multiclass-Classification-One-vs-all"><span class="nav-number">7.</span> <span class="nav-text">多类别分类：一对多 Multiclass Classification_ One-vs-all</span></a></li></ol></div>
             
 
           </div>
