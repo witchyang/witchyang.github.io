@@ -102,7 +102,7 @@
 <meta property="og:image" content="http://yoursite.com/2018/02/25/week3-2/2.jpeg">
 <meta property="og:image" content="http://yoursite.com/2018/02/25/week3-2/3.jpeg">
 <meta property="og:image" content="http://yoursite.com/2018/02/25/week3-2/4.jpeg">
-<meta property="og:updated_time" content="2018-11-04T05:29:00.260Z">
+<meta property="og:updated_time" content="2018-11-04T05:43:41.702Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="正则化(Regularization)">
 <meta name="twitter:description" content="过拟合的问题 Problem of Overfitting到现在为止，我们已经学习了几种不同的学习算法，包括线性回归和逻辑回归，它们能够有效地解决许多问题，但是当将它们应用到某些特定的机器学习应用时，会遇到过拟合(over-fitting)的问题，可能会导致它们效果很差。  就以多项式理解，$x$ 的次数越高，拟合的越好，但相应的预测的能力就可能变差。 如果我们发现了过拟合问题，应该如何处理？">
@@ -375,14 +375,11 @@
 <p>正则化线性回归的代价函数为：</p>
 <p>$J\left( \theta  \right)=\frac{1}{2m}\sum\limits_{i=1}^{m}{[({ {({h_\theta}({ {x}^{(i)}})-{ {y}^{(i)}})}^{2}}+\lambda \sum\limits_{j=1}^{n}{\theta _{j}^{2}})]}$</p>
 <p>如果我们要使用梯度下降法令这个代价函数最小化，因为我们未对$\theta_0$进行正则化，所以梯度下降算法将分两种情形：</p>
-<p>$Repeat$  $until$  $convergence${</p>
 <pre><code>   ${\theta_0}:={\theta_0}-a\frac{1}{m}\sum\limits_{i=1}^{m}{(({h_\theta}({ {x}^{(i)}})-{ {y}^{(i)}})x_{0}^{(i)}})$ 
 
    ${\theta_j}:={\theta_j}-a[\frac{1}{m}\sum\limits_{i=1}^{m}{(({h_\theta}({ {x}^{(i)}})-{ {y}^{(i)}})x_{j}^{\left( i \right)}}+\frac{\lambda }{m}{\theta_j}]$ 
 
                                         $for$ $j=1,2,...n$
-
-                   }
 </code></pre><p>对上面的算法中$ j=1,2,…,n$ 时的更新式子进行调整可得：</p>
 <p>${\theta_j}:={\theta_j}(1-a\frac{\lambda }{m})-a\frac{1}{m}\sum\limits_{i=1}^{m}{({h_\theta}({ {x}^{(i)}})-{ {y}^{(i)}})x_{j}^{\left( i \right)}}​$<br>可以看出，正则化线性回归的梯度下降算法的变化在于，每次都在原有算法更新规则的基础上令$\theta $值减少了一个额外的值。</p>
 <h3 id="正则化的逻辑回归模型-Regularized-Logistic-Regression"><a href="#正则化的逻辑回归模型-Regularized-Logistic-Regression" class="headerlink" title="正则化的逻辑回归模型 Regularized Logistic Regression"></a>正则化的逻辑回归模型 Regularized Logistic Regression</h3><p>针对逻辑回归问题，我们在之前的课程已经学习过两种优化算法：我们首先学习了使用梯度下降法来优化代价函数$J\left( \theta  \right)$，接下来学习了更高级的优化算法，这些高级优化算法需要你自己设计代价函数$J\left( \theta  \right)$。</p>
@@ -471,8 +468,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/02/20/week3/" rel="next" title="逻辑回归(Logistic Regression)">
-                <i class="fa fa-chevron-left"></i> 逻辑回归(Logistic Regression)
+              <a href="/2018/02/20/hexo-math/" rel="next" title="Hexo 数学公式无法渲染问题">
+                <i class="fa fa-chevron-left"></i> Hexo 数学公式无法渲染问题
               </a>
             
           </div>
@@ -549,7 +546,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">46</span>
+                <span class="site-state-item-count">47</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
