@@ -90,13 +90,13 @@
 
 
 
-<meta name="description" content="分类问题 Classification在分类问题中，你要预测的变量 $y$ 是离散的值，我们将学习一种叫做逻辑回归 (Logistic Regression) 的算法，这是目前最流行使用最广泛的一种学习算法。 在分类问题中，我们尝试预测的是结果是否属于某一个类（例如正确或错误）。分类问题的例子有：判断一封电子邮件是否是垃圾邮件；判断一次金融交易是否是欺诈；之前我们也谈到了肿瘤分类问题的例子，区别一">
+<meta name="description" content="分类问题 Classification在分类问题中，你要预测的变量 y是离散的值，我们将学习一种叫做逻辑回归 (Logistic Regression) 的算法，这是目前最流行使用最广泛的一种学习算法。 在分类问题中，我们尝试预测的是结果是否属于某一个类（例如正确或错误）。分类问题的例子有：判断一封电子邮件是否是垃圾邮件；判断一次金融交易是否是欺诈；之前我们也谈到了肿瘤分类问题的例子，区别一个肿瘤">
 <meta name="keywords" content="ML">
 <meta property="og:type" content="article">
 <meta property="og:title" content="逻辑回归(Logistic Regression)">
 <meta property="og:url" content="http://yoursite.com/2018/02/20/week3/index.html">
 <meta property="og:site_name" content="葛小野">
-<meta property="og:description" content="分类问题 Classification在分类问题中，你要预测的变量 $y$ 是离散的值，我们将学习一种叫做逻辑回归 (Logistic Regression) 的算法，这是目前最流行使用最广泛的一种学习算法。 在分类问题中，我们尝试预测的是结果是否属于某一个类（例如正确或错误）。分类问题的例子有：判断一封电子邮件是否是垃圾邮件；判断一次金融交易是否是欺诈；之前我们也谈到了肿瘤分类问题的例子，区别一">
+<meta property="og:description" content="分类问题 Classification在分类问题中，你要预测的变量 y是离散的值，我们将学习一种叫做逻辑回归 (Logistic Regression) 的算法，这是目前最流行使用最广泛的一种学习算法。 在分类问题中，我们尝试预测的是结果是否属于某一个类（例如正确或错误）。分类问题的例子有：判断一封电子邮件是否是垃圾邮件；判断一次金融交易是否是欺诈；之前我们也谈到了肿瘤分类问题的例子，区别一个肿瘤">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/2018/02/20/week3/1.jpeg">
 <meta property="og:image" content="http://yoursite.com/2018/02/20/week3/2.jpeg">
@@ -106,10 +106,10 @@
 <meta property="og:image" content="http://yoursite.com/2018/02/20/week3/5-1.jpeg">
 <meta property="og:image" content="http://yoursite.com/2018/02/20/week3/6.jpeg">
 <meta property="og:image" content="http://yoursite.com/2018/02/20/week3/7.jpeg">
-<meta property="og:updated_time" content="2018-11-04T04:47:55.896Z">
+<meta property="og:updated_time" content="2018-11-04T04:57:39.903Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="逻辑回归(Logistic Regression)">
-<meta name="twitter:description" content="分类问题 Classification在分类问题中，你要预测的变量 $y$ 是离散的值，我们将学习一种叫做逻辑回归 (Logistic Regression) 的算法，这是目前最流行使用最广泛的一种学习算法。 在分类问题中，我们尝试预测的是结果是否属于某一个类（例如正确或错误）。分类问题的例子有：判断一封电子邮件是否是垃圾邮件；判断一次金融交易是否是欺诈；之前我们也谈到了肿瘤分类问题的例子，区别一">
+<meta name="twitter:description" content="分类问题 Classification在分类问题中，你要预测的变量 y是离散的值，我们将学习一种叫做逻辑回归 (Logistic Regression) 的算法，这是目前最流行使用最广泛的一种学习算法。 在分类问题中，我们尝试预测的是结果是否属于某一个类（例如正确或错误）。分类问题的例子有：判断一封电子邮件是否是垃圾邮件；判断一次金融交易是否是欺诈；之前我们也谈到了肿瘤分类问题的例子，区别一个肿瘤">
 <meta name="twitter:image" content="http://yoursite.com/2018/02/20/week3/1.jpeg">
 
 
@@ -359,7 +359,7 @@
       
 
       
-        <h3 id="分类问题-Classification"><a href="#分类问题-Classification" class="headerlink" title="分类问题 Classification"></a>分类问题 Classification</h3><p>在分类问题中，你要预测的变量 $y$ 是离散的值，我们将学习一种叫做逻辑回归 (<strong>Logistic Regression</strong>) 的算法，这是目前最流行使用最广泛的一种学习算法。</p>
+        <h3 id="分类问题-Classification"><a href="#分类问题-Classification" class="headerlink" title="分类问题 Classification"></a>分类问题 Classification</h3><p>在分类问题中，你要预测的变量 <code>y</code>是离散的值，我们将学习一种叫做逻辑回归 (<strong>Logistic Regression</strong>) 的算法，这是目前最流行使用最广泛的一种学习算法。</p>
 <p>在分类问题中，我们尝试预测的是结果是否属于某一个类（例如正确或错误）。分类问题的例子有：判断一封电子邮件是否是垃圾邮件；判断一次金融交易是否是欺诈；之前我们也谈到了肿瘤分类问题的例子，区别一个肿瘤是恶性的还是良性的。</p>
 <p><img src="1.jpeg" alt=""></p>
 <p>我们从二元的分类问题开始讨论。</p>
@@ -770,7 +770,7 @@
 
   <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
-  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+  MathJax.Hub.Config("");
 </script>
 
 <script type="text/x-mathjax-config">
@@ -782,7 +782,7 @@
   });
 </script>
 
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+<script type="text/javascript" src="custom_mathjax_source">
 </script>
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
@@ -833,6 +833,8 @@
   
 
   
+  
+
 
   
 
