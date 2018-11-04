@@ -101,7 +101,8 @@
 <meta property="og:image" content="http://yoursite.com/2018/02/20/week3/1.jpeg">
 <meta property="og:image" content="http://yoursite.com/2018/02/20/week3/2.jpeg">
 <meta property="og:image" content="http://yoursite.com/2018/02/20/week3/3.jpeg">
-<meta property="og:updated_time" content="2018-11-04T04:32:31.214Z">
+<meta property="og:image" content="http://yoursite.com/2018/02/20/week3/4.jpeg">
+<meta property="og:updated_time" content="2018-11-04T04:41:45.671Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="逻辑回归(Logistic Regression)">
 <meta name="twitter:description" content="分类问题 Classification在分类问题中，你要预测的变量 $y$ 是离散的值，我们将学习一种叫做逻辑回归 (Logistic Regression) 的算法，这是目前最流行使用最广泛的一种学习算法。 在分类问题中，我们尝试预测的是结果是否属于某一个类（例如正确或错误）。分类问题的例子有：判断一封电子邮件是否是垃圾邮件；判断一次金融交易是否是欺诈；之前我们也谈到了肿瘤分类问题的例子，区别一">
@@ -371,6 +372,31 @@
 <p>$h_\theta \left( x \right)$的作用是，对于给定的输入变量，根据选择的参数计算输出变量=1的可能性（<strong>estimated probablity</strong>）即$h_\theta \left( x \right)=P\left( y=1|x;\theta \right)$<br>例如，如果对于给定的$x$，通过已经确定的参数计算得出$h_\theta \left( x \right)=0.7$，则表示有70%的几率$y$为正向类，相应地$y$为负向类的几率为1-0.7=0.3。</p>
 <h3 id="判定边界-Decision-Boundary"><a href="#判定边界-Decision-Boundary" class="headerlink" title="判定边界 Decision Boundary"></a>判定边界 Decision Boundary</h3><p>决策边界(<strong>decision boundary</strong>)的概念能更好地帮助我们理解逻辑回归的假设函数在计算什么。</p>
 <p><img src="3.jpeg" alt=""></p>
+<p>在逻辑回归中，我们预测：</p>
+<p>当${h_\theta}\left( x \right)&gt;=0.5$时，预测 $y=1$。</p>
+<p>当${h_\theta}\left( x \right)&lt;0.5$时，预测 $y=0$ 。</p>
+<p>根据上面绘制出的 <strong>S</strong> 形函数图像，我们知道当</p>
+<p>$z=0$ 时 $g(z)=0.5$</p>
+<p>$z&gt;0$ 时 $g(z)&gt;0.5$</p>
+<p>$z&lt;0$ 时 $g(z)&lt;0.5$</p>
+<p>又 $z={\theta^{T}}x$ ，即：<br>${\theta^{T}}x&gt;=0$  时，预测 $y=1$<br>${\theta^{T}}x&lt;0$  时，预测 $y=0$</p>
+<p>我们可以用非常复杂的模型来适应非常复杂形状的判定边界。</p>
+<h3 id="代价函数-Cost-Function"><a href="#代价函数-Cost-Function" class="headerlink" title="代价函数  Cost Function"></a>代价函数  Cost Function</h3><p>我们要介绍如何拟合逻辑回归模型的参数$\theta$。具体来说，我要定义用来拟合参数的优化目标或者叫代价函数，这便是监督学习问题中的逻辑回归模型的拟合问题。</p>
+<p>对于线性回归模型，我们定义的代价函数是所有模型误差的平方和。理论上来说，我们也可以对逻辑回归模型沿用这个定义，但是问题在于，当我们将${h_\theta}\left( x \right)=\frac{1}{1+{e^{-\theta^{T}x}}}$带入到这样定义了的代价函数中时，我们得到的代价函数将是一个非凸函数（<strong>non-convexfunction</strong>）。</p>
+<p>这意味着我们的代价函数有许多局部最小值，这将影响梯度下降算法寻找全局最小值。</p>
+<p><img src="4.jpeg" alt=""></p>
+<p><strong>Python</strong>代码实现：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">    </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">cost</span><span class="params">(theta, X, y)</span>:</span></span><br><span class="line">    </span><br><span class="line">  theta = np.matrix(theta)</span><br><span class="line">  X = np.matrix(X)</span><br><span class="line">  y = np.matrix(y)</span><br><span class="line">  first = np.multiply(-y, np.log(sigmoid(X* theta.T)))</span><br><span class="line">  second = np.multiply((<span class="number">1</span> - y), np.log(<span class="number">1</span> - sigmoid(X* theta.T)))</span><br><span class="line">  <span class="keyword">return</span> np.sum(first - second) / (len(X))</span><br></pre></td></tr></table></figure>
+<p>在得到这样一个代价函数以后，我们便可以用梯度下降算法来求得能使代价函数最小的参数了。算法为：</p>
+<p><strong>Repeat</strong> {<br>$\theta_j := \theta_j - \alpha \frac{\partial}{\partial\theta_j} J(\theta)$<br>(<strong>simultaneously update all</strong> )<br>}</p>
+<p>求导后得到：</p>
+<p><strong>Repeat</strong> {<br>$\theta_j := \theta_j - \alpha \frac{1}{m}\sum\limits_{i=1}^{m}{ {\left( {h_\theta}\left( \mathop{x}^{\left( i \right)} \right)-\mathop{y}^{\left( i \right)} \right)}}\mathop{x}_{j}^{(i)}$<br><strong>(simultaneously update all</strong> )<br>}</p>
+<p>在这个视频中，我们定义了单训练样本的代价函数，凸性分析的内容是超出这门课的范围的，但是可以证明我们所选的代价值函数会给我们一个凸优化问题。代价函数$J(\theta)$会是一个凸函数，并且没有局部最优值。</p>
+<p>推导过程：</p>
+<p>$J\left( \theta  \right)=-\frac{1}{m}\sum\limits_{i=1}^{m}{[{ {y}^{(i)}}\log \left( {h_\theta}\left( { {x}^{(i)}} \right) \right)+\left( 1-{ {y}^{(i)}} \right)\log \left( 1-{h_\theta}\left( { {x}^{(i)}} \right) \right)]}$<br>考虑：<br>${h_\theta}\left( { {x}^{(i)}} \right)=\frac{1}{1+{ {e}^{-{\theta^T}{ {x}^{(i)}}}}}$<br>则：<br>${ {y}^{(i)}}\log \left( {h_\theta}\left( { {x}^{(i)}} \right) \right)+\left( 1-{ {y}^{(i)}} \right)\log \left( 1-{h_\theta}\left( { {x}^{(i)}} \right) \right)$<br>$={ {y}^{(i)}}\log \left( \frac{1}{1+{ {e}^{-{\theta^T}{ {x}^{(i)}}}}} \right)+\left( 1-{ {y}^{(i)}} \right)\log \left( 1-\frac{1}{1+{ {e}^{-{\theta^T}{ {x}^{(i)}}}}} \right)$<br>$=-{ {y}^{(i)}}\log \left( 1+{ {e}^{-{\theta^T}{ {x}^{(i)}}}} \right)-\left( 1-{ {y}^{(i)}} \right)\log \left( 1+{ {e}^{ {\theta^T}{ {x}^{(i)}}}} \right)$</p>
+<p>所以：<br>$\frac{\partial }{\partial {\theta_{j}}}J\left( \theta  \right)=\frac{\partial }{\partial {\theta_{j}}}[-\frac{1}{m}\sum\limits_{i=1}^{m}{[-{ {y}^{(i)}}\log \left( 1+{ {e}^{-{\theta^{T}}{ {x}^{(i)}}}} \right)-\left( 1-{ {y}^{(i)}} \right)\log \left( 1+{ {e}^{ {\theta^{T}}{ {x}^{(i)}}}} \right)]}]$<br>$=-\frac{1}{m}\sum\limits_{i=1}^{m}{[-{ {y}^{(i)}}\frac{-x_{j}^{(i)}{ {e}^{-{\theta^{T}}{ {x}^{(i)}}}}}{1+{ {e}^{-{\theta^{T}}{ {x}^{(i)}}}}}-\left( 1-{ {y}^{(i)}} \right)\frac{x_j^{(i)}{ {e}^{ {\theta^T}{ {x}^{(i)}}}}}{1+{ {e}^{ {\theta^T}{ {x}^{(i)}}}}}}]$<br>$=-\frac{1}{m}\sum\limits_{i=1}^{m}{ {y}^{(i)}}\frac{x_j^{(i)}}{1+{ {e}^{ {\theta^T}{ {x}^{(i)}}}}}-\left( 1-{ {y}^{(i)}} \right)\frac{x_j^{(i)}{ {e}^{ {\theta^T}{ {x}^{(i)}}}}}{1+{ {e}^{ {\theta^T}{ {x}^{(i)}}}}}]$<br>$=-\frac{1}{m}\sum\limits_{i=1}^{m}{\frac{ { {y}^{(i)}}x_j^{(i)}-x_j^{(i)}{ {e}^{ {\theta^T}{ {x}^{(i)}}}}+{ {y}^{(i)}}x_j^{(i)}{ {e}^{ {\theta^T}{ {x}^{(i)}}}}}{1+{ {e}^{ {\theta^T}{ {x}^{(i)}}}}}}$<br>$=-\frac{1}{m}\sum\limits_{i=1}^{m}{\frac{ { {y}^{(i)}}\left( 1\text{+}{ {e}^{ {\theta^T}{ {x}^{(i)}}}} \right)-{ {e}^{ {\theta^T}{ {x}^{(i)}}}}}{1+{ {e}^{ {\theta^T}{ {x}^{(i)}}}}}x_j^{(i)}}$<br>$=-\frac{1}{m}\sum\limits_{i=1}^{m}{({ {y}^{(i)}}-\frac{ { {e}^{ {\theta^T}{ {x}^{(i)}}}}}{1+{ {e}^{ {\theta^T}{ {x}^{(i)}}}}})x_j^{(i)}}$<br>$=-\frac{1}{m}\sum\limits_{i=1}^{m}{({ {y}^{(i)}}-\frac{1}{1+{ {e}^{-{\theta^T}{ {x}^{(i)}}}}})x_j^{(i)}}$<br>$=-\frac{1}{m}\sum\limits_{i=1}^{m}{[{ {y}^{(i)}}-{h_\theta}\left( { {x}^{(i)}} \right)]x_j^{(i)}}$<br>$=\frac{1}{m}\sum\limits_{i=1}^{m}{[{h_\theta}\left( { {x}^{(i)}} \right)-{ {y}^{(i)}}]x_j^{(i)}}$</p>
+<p>注：虽然得到的梯度下降算法表面上看上去与线性回归的梯度下降算法一样，但是这里的${h_\theta}\left( x \right)=g\left( {\theta^T}X \right)$与线性回归中不同，所以实际上是不一样的。另外，在运行梯度下降算法之前，进行特征缩放依旧是非常必要的。</p>
+<p>一些梯度下降算法之外的选择：<br>除了梯度下降算法以外，还有一些常被用来令代价函数最小的算法，这些算法更加复杂和优越，而且通常不需要人工选择学习率，通常比梯度下降算法要更加快速。这些算法有：<strong>共轭梯度</strong>（<strong>Conjugate Gradient</strong>），<strong>局部优化法</strong>(<strong>Broyden fletcher goldfarb shann,BFGS</strong>)和<strong>有限内存局部优化法</strong>(<strong>LBFGS</strong>)。</p>
 
       
     </div>
@@ -593,7 +619,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#分类问题-Classification"><span class="nav-number">1.</span> <span class="nav-text">分类问题 Classification</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#假说表示-Hypothesis-Representation"><span class="nav-number">2.</span> <span class="nav-text">假说表示 Hypothesis Representation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#判定边界-Decision-Boundary"><span class="nav-number">3.</span> <span class="nav-text">判定边界 Decision Boundary</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#分类问题-Classification"><span class="nav-number">1.</span> <span class="nav-text">分类问题 Classification</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#假说表示-Hypothesis-Representation"><span class="nav-number">2.</span> <span class="nav-text">假说表示 Hypothesis Representation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#判定边界-Decision-Boundary"><span class="nav-number">3.</span> <span class="nav-text">判定边界 Decision Boundary</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代价函数-Cost-Function"><span class="nav-number">4.</span> <span class="nav-text">代价函数  Cost Function</span></a></li></ol></div>
             
 
           </div>
