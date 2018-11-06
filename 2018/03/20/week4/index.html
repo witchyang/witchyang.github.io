@@ -108,7 +108,7 @@
 <meta property="og:image" content="http://yoursite.com/2018/03/20/week4/7.png">
 <meta property="og:image" content="http://yoursite.com/2018/03/20/week4/8.png">
 <meta property="og:image" content="http://yoursite.com/2018/03/20/week4/9.png">
-<meta property="og:updated_time" content="2018-11-06T05:02:41.819Z">
+<meta property="og:updated_time" content="2018-11-06T05:06:40.106Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="神经网络(Neural Network)">
 <meta name="twitter:description" content="非线性假设  Non-linear Hypotheses我们之前学的，无论是线性回归还是逻辑回归都有这样一个缺点，即：当特征太多时，计算的负荷会非常大。 假设我们希望训练一个模型来识别视觉对象（例如识别一张图片上是否是一辆汽车），我们怎样才能这么做呢？一种方法是我们利用很多汽车的图片和很多非汽车的图片，然后利用这些图片上一个个像素的值（饱和度或亮度）来作为特征。 假如我们只选用灰度图片，每个像素则">
@@ -364,7 +364,7 @@
         <h3 id="非线性假设-Non-linear-Hypotheses"><a href="#非线性假设-Non-linear-Hypotheses" class="headerlink" title="非线性假设  Non-linear Hypotheses"></a>非线性假设  Non-linear Hypotheses</h3><p>我们之前学的，无论是线性回归还是逻辑回归都有这样一个缺点，即：当特征太多时，计算的负荷会非常大。</p>
 <p>假设我们希望训练一个模型来识别视觉对象（例如识别一张图片上是否是一辆汽车），我们怎样才能这么做呢？一种方法是我们利用很多汽车的图片和很多非汽车的图片，然后利用这些图片上一个个像素的值（饱和度或亮度）来作为特征。</p>
 <p>假如我们只选用灰度图片，每个像素则只有一个值（而非 <strong>RGB</strong>值），我们可以选取图片上的两个不同位置上的两个像素，然后训练一个逻辑回归算法利用这两个像素的值来判断图片上是否是汽车.</p>
-<h3 id="8-3-模型表示-Model-Representation-I"><a href="#8-3-模型表示-Model-Representation-I" class="headerlink" title="8.3 模型表示  Model Representation I"></a>8.3 模型表示  Model Representation I</h3><p>神经网络模型建立在很多神经元之上，每一个神经元又是一个个学习模型。这些神经元（也叫激活单元，<strong>activation unit</strong>）采纳一些特征作为输出，并且根据本身的模型提供一个输出。下图设计出了类似于神经元的神经网络，在神经网络中，参数又可被成为权重（<strong>weight</strong>）。</p>
+<h3 id="模型表示-Model-Representation-I"><a href="#模型表示-Model-Representation-I" class="headerlink" title="模型表示  Model Representation I"></a>模型表示  Model Representation I</h3><p>神经网络模型建立在很多神经元之上，每一个神经元又是一个个学习模型。这些神经元（也叫激活单元，<strong>activation unit</strong>）采纳一些特征作为输出，并且根据本身的模型提供一个输出。下图设计出了类似于神经元的神经网络，在神经网络中，参数又可被成为权重（<strong>weight</strong>）。</p>
 <p><img src="1.png" alt=""></p>
 <p>其中$x_1$, $x_2$, $x_3$是输入单元（<strong>input units</strong>），我们将原始数据输入给它们。<br>$a_1$, $a_2$, $a_3$是中间单元，它们负责将数据进行处理，然后呈递到下一层。<br>最后是输出单元，它负责计算${h_\theta}\left( x \right)$。</p>
 <p>神经网络模型是许多逻辑单元按照不同层级组织起来的网络，每一层的输出变量都是下一层的输入变量。下图为一个3层的神经网络，第一层成为输入层（<strong>Input Layer</strong>），最后一层称为输出层（<strong>Output Layer</strong>），中间一层成为隐藏层（<strong>Hidden Layers</strong>）。我们为每一层都增加一个偏差单位（<strong>bias unit</strong>）。</p>
@@ -472,6 +472,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2018/03/22/week5/" rel="prev" title="神经网络-1(Neural Network)">
+                神经网络-1(Neural Network) <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -540,7 +544,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">51</span>
+                <span class="site-state-item-count">52</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -617,7 +621,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#非线性假设-Non-linear-Hypotheses"><span class="nav-number">1.</span> <span class="nav-text">非线性假设  Non-linear Hypotheses</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-3-模型表示-Model-Representation-I"><span class="nav-number">2.</span> <span class="nav-text">8.3 模型表示  Model Representation I</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模型表示-Model-Representation-II"><span class="nav-number">3.</span> <span class="nav-text">模型表示 Model Representation II</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#样本和直观理解-Examples-and-Intuitions"><span class="nav-number">4.</span> <span class="nav-text">样本和直观理解 - Examples and Intuitions</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多类分类-Multiclass-Classification"><span class="nav-number">5.</span> <span class="nav-text">多类分类  Multiclass Classification</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#非线性假设-Non-linear-Hypotheses"><span class="nav-number">1.</span> <span class="nav-text">非线性假设  Non-linear Hypotheses</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模型表示-Model-Representation-I"><span class="nav-number">2.</span> <span class="nav-text">模型表示  Model Representation I</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模型表示-Model-Representation-II"><span class="nav-number">3.</span> <span class="nav-text">模型表示 Model Representation II</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#样本和直观理解-Examples-and-Intuitions"><span class="nav-number">4.</span> <span class="nav-text">样本和直观理解 - Examples and Intuitions</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多类分类-Multiclass-Classification"><span class="nav-number">5.</span> <span class="nav-text">多类分类  Multiclass Classification</span></a></li></ol></div>
             
 
           </div>
