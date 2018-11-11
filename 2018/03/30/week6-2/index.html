@@ -90,18 +90,18 @@
 
 
 
-<meta name="description" content="Be better for something">
+<meta name="description" content="首先要做什么给定一个电子邮件数据集，我们可以为每个电子邮件构建一个向量。这个向量中的每个条目代表一个单词（词袋模型）。该矢量通常包含10,000到50,000个条目，通过查找我们数据集中最常用的单词来收集。如果在电子邮件中找到一个单词，我们将分配它的相应条目1，否则如果没有找到，条目将是0.一旦我们已经准备好了所有的x向量，我们将训练我们的算法，最后，我们可以用它来分类电子邮件是否是垃圾邮件。 那">
 <meta name="keywords" content="ML">
 <meta property="og:type" content="article">
 <meta property="og:title" content="机器学习系统设计">
 <meta property="og:url" content="http://yoursite.com/2018/03/30/week6-2/index.html">
 <meta property="og:site_name" content="葛小野">
-<meta property="og:description" content="Be better for something">
+<meta property="og:description" content="首先要做什么给定一个电子邮件数据集，我们可以为每个电子邮件构建一个向量。这个向量中的每个条目代表一个单词（词袋模型）。该矢量通常包含10,000到50,000个条目，通过查找我们数据集中最常用的单词来收集。如果在电子邮件中找到一个单词，我们将分配它的相应条目1，否则如果没有找到，条目将是0.一旦我们已经准备好了所有的x向量，我们将训练我们的算法，最后，我们可以用它来分类电子邮件是否是垃圾邮件。 那">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-11-09T06:33:15.763Z">
+<meta property="og:updated_time" content="2018-11-11T07:58:02.228Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="机器学习系统设计">
-<meta name="twitter:description" content="Be better for something">
+<meta name="twitter:description" content="首先要做什么给定一个电子邮件数据集，我们可以为每个电子邮件构建一个向量。这个向量中的每个条目代表一个单词（词袋模型）。该矢量通常包含10,000到50,000个条目，通过查找我们数据集中最常用的单词来收集。如果在电子邮件中找到一个单词，我们将分配它的相应条目1，否则如果没有找到，条目将是0.一旦我们已经准备好了所有的x向量，我们将训练我们的算法，最后，我们可以用它来分类电子邮件是否是垃圾邮件。 那">
 
 
 
@@ -350,7 +350,73 @@
       
 
       
-        
+        <h3 id="首先要做什么"><a href="#首先要做什么" class="headerlink" title="首先要做什么"></a>首先要做什么</h3><p>给定一个电子邮件数据集，我们可以为每个电子邮件构建一个向量。这个向量中的每个条目代表一个单词（词袋模型）。该矢量通常包含10,000到50,000个条目，通过查找我们数据集中最常用的单词来收集。如果在电子邮件中找到一个单词，我们将分配它的相应条目1，否则如果没有找到，条目将是0.一旦我们已经准备好了所有的x向量，我们将训练我们的算法，最后，我们可以用它来分类电子邮件是否是垃圾邮件。</p>
+<p>那么你怎么能花时间来提高这个分类器的准确度呢？</p>
+<ul>
+<li>Step1.使用快速但不完美的算法实现；</li>
+<li>Step2.画出学习曲线，分析偏差、方差，判断是否需要更多的数据、增加特征量….;</li>
+<li>Step3.误差分析:人工检测错误、发现系统短处，来增加特征量以改进系统。</li>
+</ul>
+<p>那么你怎么能花时间来提高这个分类器的准确度呢？</p>
+<ul>
+<li>收集大量的数据（例如“蜜罐”项目，但并不总是有效）</li>
+<li>开发复杂的功能（例如：在垃圾电子邮件中使用电子邮件标题数据）</li>
+<li>开发算法以不同的方式处理您的输入（识别垃圾邮件中的拼写错误）。</li>
+</ul>
+<h3 id="误差分析"><a href="#误差分析" class="headerlink" title="误差分析"></a>误差分析</h3><p>一般我们提升模型的步骤为：</p>
+<ul>
+<li>Step1.使用快速但不完美的算法实现；</li>
+<li>Step2.画出学习曲线，分析偏差、方差，判断是否需要更多的数据、增加特征量….;</li>
+<li>Step3.误差分析:人工检测错误、发现系统短处，来增加特征量以改进系统。</li>
+</ul>
+<p>因此，我们应该尝试新的东西，为我们的错误率得到一个数值，并根据我们的结果决定是否要保留新的特征。（使用误差度量值 来判断是否添加新的特征）</p>
+<h3 id="处理偏斜类（Skewed-Classes）数据"><a href="#处理偏斜类（Skewed-Classes）数据" class="headerlink" title="处理偏斜类（Skewed Classes）数据"></a>处理偏斜类（Skewed Classes）数据</h3><p>假定我们通过逻辑回归来预测病人是否患有癌症：</p>
+<script type="math/tex; mode=display">y = \begin{cases} 0, & \text {病人未患癌症} \\ 1, & \text{病人患有癌症} \end{cases}</script><p>并且，令人欣喜的是，测试集的错误率只有 1%。别着急高兴，假如我们的测试样本中只有 0.5% 患有癌症，那么我们何不直接让预测函数为：</p>
+<p><code>hθ(x)=0</code></p>
+<p>即，我们永远预测病人不患病，那么准确率会高达 95%。但这可不是一件好事儿，我们追求高准确率牺牲的是病人的利益。引起这个问题的原因是样本中出现了偏斜类（Skewed Classes），偏斜即倾斜，大量样本倾斜向了某一类型。</p>
+<p>有些时候，一些数据很不平衡，比如正向的占99%、负向的占1%（倾斜数据shewed data）。这样只用准确度这个指标就不能很好的衡量算法的好坏，所以我们引入了<code>查准率(precision)</code>和<code>召回率(recall)</code>。</p>
+<h3 id="查准率和召回率"><a href="#查准率和召回率" class="headerlink" title="查准率和召回率"></a>查准率和召回率</h3><p><strong>查准率</strong>（<strong>Precision</strong>）和<strong>查全率</strong>（<strong>Recall</strong>） 我们将算法预测的结果分成四种情况：</p>
+<p> <strong>正确肯定</strong>（<strong>True Positive,TP</strong>）：预测为真，实际为真</p>
+<p><strong>正确否定</strong>（<strong>True Negative,TN</strong>）：预测为假，实际为假</p>
+<p><strong>错误肯定</strong>（<strong>False Positive,FP</strong>）：预测为真，实际为假</p>
+<p><strong>错误否定</strong>（<strong>False Negative,FN</strong>）：预测为假，实际为真</p>
+<p>则：查准率=<strong>TP/(TP+FP)</strong>。例，在所有我们预测有恶性肿瘤的病人中，实际上有恶性肿瘤的病人的百分比，越高越好。</p>
+<p>查全率=<strong>TP/(TP+FN)</strong>。例，在所有实际上有恶性肿瘤的病人中，成功预测有恶性肿瘤的病人的百分比，越高越好。</p>
+<p>这样，对于我们刚才那个总是预测病人肿瘤为良性的算法，其查全率是0。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th><strong>预测值</strong></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td></td>
+<td><strong>Positive</strong></td>
+<td><strong>Negtive</strong></td>
+</tr>
+<tr>
+<td><strong>实际值</strong></td>
+<td><strong>Positive</strong></td>
+<td><strong>TP</strong></td>
+<td><strong>FN</strong></td>
+</tr>
+<tr>
+<td></td>
+<td><strong>Negtive</strong></td>
+<td><strong>FP</strong></td>
+<td><strong>TN</strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Precision=TruePosPredicatedPos=TruePosTruePos+FalsePos</p>
+
       
     </div>
 
@@ -468,8 +534,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image" src="/images/1.jpg" alt="杨玺彤">
           <p class="site-author-name" itemprop="name">杨玺彤</p>
@@ -549,6 +624,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#首先要做什么"><span class="nav-number">1.</span> <span class="nav-text">首先要做什么</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#误差分析"><span class="nav-number">2.</span> <span class="nav-text">误差分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#处理偏斜类（Skewed-Classes）数据"><span class="nav-number">3.</span> <span class="nav-text">处理偏斜类（Skewed Classes）数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查准率和召回率"><span class="nav-number">4.</span> <span class="nav-text">查准率和召回率</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
