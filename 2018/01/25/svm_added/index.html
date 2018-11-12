@@ -1,0 +1,994 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="ML,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1">
+
+
+
+
+
+
+<meta name="description" content="决策边界上一篇介绍了SVM的超平面划分。 $w^Tx + b = 0 \tag{1}$ 其中， $w$ 表示权值向量，权值向量对应了决策边界的法向量。$b$ 则表示偏置，也称位移项，表示了决策边界距坐标原点的距离。我们可以将决策边界记为 $(w,b)$，那么，样本$x$ 到决策边界的距离为： $r = \frac{|w^Tx + b|}{||w||} \tag{2}$ 我们将正样本标识为 1，负样">
+<meta name="keywords" content="ML">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SVM-2">
+<meta property="og:url" content="http://yoursite.com/2018/01/25/svm_added/index.html">
+<meta property="og:site_name" content="葛小野">
+<meta property="og:description" content="决策边界上一篇介绍了SVM的超平面划分。 $w^Tx + b = 0 \tag{1}$ 其中， $w$ 表示权值向量，权值向量对应了决策边界的法向量。$b$ 则表示偏置，也称位移项，表示了决策边界距坐标原点的距离。我们可以将决策边界记为 $(w,b)$，那么，样本$x$ 到决策边界的距离为： $r = \frac{|w^Tx + b|}{||w||} \tag{2}$ 我们将正样本标识为 1，负样">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2018/01/25/svm_added/1.png">
+<meta property="og:image" content="http://yoursite.com/2018/01/25/svm_added/2.png">
+<meta property="og:image" content="http://yoursite.com/2018/01/25/svm_added/3.png">
+<meta property="og:image" content="http://yoursite.com/2018/01/25/svm_added/4.png">
+<meta property="og:image" content="http://yoursite.com/2018/01/25/svm_added/5.png">
+<meta property="og:image" content="http://yoursite.com/2018/01/25/svm_added/6.png">
+<meta property="og:image" content="http://yoursite.com/2018/01/25/svm_added/7.png">
+<meta property="og:image" content="http://yoursite.com/2018/01/25/svm_added/8.png">
+<meta property="og:updated_time" content="2018-11-12T12:17:06.496Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SVM-2">
+<meta name="twitter:description" content="决策边界上一篇介绍了SVM的超平面划分。 $w^Tx + b = 0 \tag{1}$ 其中， $w$ 表示权值向量，权值向量对应了决策边界的法向量。$b$ 则表示偏置，也称位移项，表示了决策边界距坐标原点的距离。我们可以将决策边界记为 $(w,b)$，那么，样本$x$ 到决策边界的距离为： $r = \frac{|w^Tx + b|}{||w||} \tag{2}$ 我们将正样本标识为 1，负样">
+<meta name="twitter:image" content="http://yoursite.com/2018/01/25/svm_added/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/01/25/svm_added/">
+
+
+
+
+
+  <title>SVM-2 | 葛小野</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">葛小野</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">临渊羡鱼不如退而结网</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/25/svm_added/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="杨玺彤">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/1.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="葛小野">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">SVM-2</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-25T13:15:51+09:00">
+                2018-01-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/ML/" itemprop="url" rel="index">
+                    <span itemprop="name">ML</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="决策边界"><a href="#决策边界" class="headerlink" title="决策边界"></a>决策边界</h3><p>上一篇介绍了SVM的超平面划分。</p>
+<p>$w^Tx + b = 0 \tag{1}$</p>
+<p>其中， $w$ 表示权值向量，权值向量对应了决策边界的法向量。$b$ 则表示偏置，也称位移项，表示了决策边界距坐标原点的距离。我们可以将决策边界记为 $(w,b)$，那么，样本$x$ 到决策边界的距离为：</p>
+<p>$r = \frac{|w^Tx + b|}{||w||} \tag{2}$</p>
+<p>我们将正样本标识为 1，负样本标识为 -1， 则 SVM 的期望预测可以重新描述为：</p>
+<script type="math/tex; mode=display">
+\begin{cases}
+w^Tx^{(i)} + b \geq +1, \quad \mbox{if $y^{(i)} = +1$} \\
+w^Tx^{(i)} + b \leq -1, \quad \mbox{if $y^{(i)} = -1$}
+\end{cases}
+\tag{3}</script><p>即：</p>
+<p>$y^{(i)} (w^Tx^{(i)} + b) \geq 1 \tag {4}$</p>
+<p>使等号成立的样本称之为“支持向量（Support Vectors）”，两个异类的支持向量到决策边界的距离之和为：</p>
+<p>$\gamma = \frac{2}{||w||} \tag{5}$</p>
+<p><img src="1.png" alt=""></p>
+<p>SVM 就是力图是 $γ$ 足够大，从而获得更好的泛化能力：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+& \max_{w, b} \frac{2}{||w||} \\
+\mbox{s.t}. \quad & y^{(i)}(w^Tx^{(i)} + b) \geq 1, \quad i = 1,2,...,m
+\end{align*}
+\tag{6}</script><p>可以转化为如下的二次优化问题：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+& \min_{w,b} \frac{1}{2} ||w||^2 \\
+\mbox{s.t.} \quad & y^{(i)}(w^Tx^{(i)} + b) \geq 1, \quad i = 1,2,...,m
+\end{align*}
+\tag{7}</script><h3 id="硬间隔与软间隔"><a href="#硬间隔与软间隔" class="headerlink" title="硬间隔与软间隔"></a>硬间隔与软间隔</h3><p>红色的决策边界表示了一种较硬的间隔划分，这种划分，能将所有正、负样本区分开来：</p>
+<p><img src="2.png" alt=""></p>
+<p>硬间隔并不一定好，就像我们在回归问题中提到的那样，这只是对于训练样本作出了极佳的拟合，但容易造成<strong>过拟合</strong>。比如我们现在有了一个新的负样本，他被错误地分类为了正样本：</p>
+<p><img src="3.png" alt=""></p>
+<p>而下图则展示了一种较软的间隔，这样的决策边界允许了一部分分类异常，避免了过拟合问题，但如果过软，也容易造成欠拟合问题：</p>
+<p><img src="4.png" alt=""></p>
+<p>鉴于此，我们在优化过程中，添加一个参数 $ C$ 来控制间隔的“软硬”：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+& \min_{w,b}\frac{1}{||w||^2} + C\sum_{i=1}^m \ell(y^{(i)}(w^Tx^{(i)})-1) \\
+\mbox{s.t.} \quad & y^{(i)}(w^Tx^{(i)} + b) \geq 1, \quad i = 1,2,...,m
+\end{align*}
+\tag{8}</script><p>其中，$\ell(z)$是损失函数，其衡量了样本 $x$ 与真实值 $y^{(i)}$的近似程度，当 $C$取值越大时，为了最优化问题，需要 $\ell(z)$越小，即各个样本都要尽可能分类正确，这提高了训练准确率，但也面临过拟合的问题。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>C 取值</th>
+<th>优势</th>
+<th>可能面临问题</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>大</td>
+<td>提高训练精度</td>
+<td>过拟合</td>
+</tr>
+<tr>
+<td>小</td>
+<td>解决过拟合问题</td>
+<td>欠拟合</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>$C$扮演了回归问题中正则化参数 $\frac{1}{\lambda}$的角色。当  $C$的取值趋于 $\infty$ 时，模型就变为了硬间隔支持向量机。</p>
+<p>常见的损失函数有:</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>函数式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0/1 损失</td>
+<td><script type="math/tex">\ell(z) = \begin{cases} 1, \quad \mbox{if $z \lt 0$} \\ 0, \mbox{otherwise} \end{cases}</script></td>
+</tr>
+<tr>
+<td>hinge 损失</td>
+<td>$\ell(z) = max(0, 1-z)$</td>
+</tr>
+<tr>
+<td>指数损失</td>
+<td>$\ell(z) = exp(-z)$</td>
+</tr>
+<tr>
+<td>对数损失</td>
+<td>$\ell(z) = log(1+exp(-z))$</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>若采用 hinge 损失函数，则式 (8) 可以具体为：<br>$\min_{w,b} \frac{1}{2}||w||^2 + C\sum_{i=1}^m max(0, 1- y^{(i)}(w^Tx^{(i)} + b)) \tag{9}$</p>
+<p><img src="5.png" alt=""></p>
+<p>引入 “松弛变量（slack variables）”  $\xi^{(i)} \geq 0$，可以将式 (9) 改写为：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+& \min_{w,b,\xi^{(i)}} \frac{1}{2}||w||^2 +C\sum_{i=1}^m\xi^{(i)} \\
+\mbox{s.t.} \quad & y^{(i)}(w^Tx^{(i)} + b) \geq 1 - \xi^{(i)} \\
+& \xi^{(i)} \geq 0, i=1,2,3,...,m
+\end{align*}
+\tag{10}</script><p>这就构成 “软间隔支持向量机”。</p>
+<p>松弛变量，顾名思义，就是控制每个样本受到约束的程度。$\xi^{(i)}$越大，则受约束程度越小（越松弛）。</p>
+<ul>
+<li>当$\xi^{(i)} &gt; 1$, 则 $max (0, 1- y^{(i)}(w^Tx^{(i)} + b)) &gt; 1$,则$y^{(i)}$ 与 $(w^Tx^{(i)} + b))$异号，分类错误。</li>
+<li>当$\xi^{(i)}=0$, 则 $max (0, 1- y^{(i)}(w^Tx^{(i)} + b)) =0$,则$1- y^{(i)}(w^Tx^{(i)} + b) = 0$,样本落在了最大间隔边界上。</li>
+<li>当$0 \lt \xi^{(i)} \leq 1$, 则 $max (0, 1- y^{(i)}(w^Tx^{(i)} + b)) \leq 1$,则$0 \leq 1- y^{(i)}(w^Tx^{(i)} + b) \leq 1$异号，样本落在了最大间隔与决策边界之间。</li>
+</ul>
+<h3 id="对偶问题"><a href="#对偶问题" class="headerlink" title="对偶问题"></a>对偶问题</h3><p>对于式 (10) 的优化模型，应用拉格朗日乘子法获得的拉格朗日函数如下：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+L(w,b,\alpha,\xi,\mu) =& \frac{1}{2}||w||^2 + C\sum_{i=1}^m\xi^{(i)} \\
+& +\sum_{i=1}^m\alpha^{(i)}(1-\xi^{(i)}-y_i(w^Tx_i + b)) - \sum_{i=1}^m \mu^{(i)} \xi^{(i)}
+\end{align*}
+\tag{11}</script><p>其中， $\alpha^{(i)} \geq 0$， $\mu^{(i)} \geq 0$是拉格朗日乘子。</p>
+<p>令 $ L(w,b,α,ξ,μ)$ 对 $ w$，$b$，$\xi^{(i)}$的偏导为 0 可得：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+w &= \sum_{i=1}^m \alpha^{(i)} y^{(i)} x^{(i)} \tag{12} \\
+0 &= \sum_{i=1}^m \alpha^{(i)} y^{(i)} \tag{13} \\
+C &= \alpha^{(i)} + \mu^{(i)} \tag{14}
+\end{align*}</script><p>将其带入 (1) 式中，得：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+f(x) &= w^Tx + b \\
+    &= \sum_{i=1}^m\alpha^{(i)} y^{(i)} (x^{(i)})^T x + b
+\end{align*}
+\tag{15}</script><p>将式 (12) - (14) 代入式 (11) 中，就得到了式 (10) 的 对偶问题：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+& \max_{\alpha} \sum_{i=1}^m\alpha^{(i)} - \frac{1}{2}\sum_{i=1}^m\sum_{j=1}^m \alpha^{(i)} \alpha^{(j)} y^{(i)} y^{(j)} (x^{(i)})^T x^{(j)} \\
+\mbox{s.t.} \quad & \sum_{i=1}^m \alpha^{(i)} y^{(i)} = 0, \\
+& 0 \leq \alpha^{(i)} \leq C, i=1,2,...,m
+\end{align*}
+\tag{16}</script><p>对于软间隔支持向量机，KKT 条件要求：</p>
+<script type="math/tex; mode=display">
+\begin{cases}
+\alpha^{(i)} \geq 0, \mu^{(i)} \geq 0, \\
+y^{(i)}f(x^{(i)}) - 1 + \xi_i \geq 0, \\
+\alpha^{(i)}(y^{(i)}f(x^{(i)})-1+\xi^{(i)})) = 0, \\
+\xi^{(i)} \geq 0, \mu^{(i)}\xi^{(i)} = 0
+\end{cases}
+\tag{17}</script><p><img src="6.png" alt=""></p>
+<p>综上，我们不但可以将 KKT 条件写为：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+& \alpha^{(i)}=0\Leftrightarrow y^{(i)}f(x^{(i)})\geq1,\\
+& 0<\alpha^{(i)}<C\Leftrightarrow y^{(i)}f(x^{(i)})=1,\\
+& \alpha^{(i)}=C\Leftrightarrow y^{(i)}f(x^{(i)})\leq 1.
+\end{align*}
+\tag{21}</script><p>并且，还能够知道，采用了 hinge 损失函数的最终模型  $f(x)$仅与支持向量有关。</p>
+<h3 id="核函数"><a href="#核函数" class="headerlink" title="核函数"></a>核函数</h3><p>假定我们面临的数据呈现下面这样的分布：</p>
+<p><img src="7.png" alt=""></p>
+<p>显然，这不是一个线性可分的问题，在逻辑回归中，我们会通过多项式扩展来创建新的高维特征，从而将低维度的线性不可分问题转换为了高维度的线性可分问题。</p>
+<p>在 SVM 中，仍然是考虑将低维不可分问题转换到高维度可分问题:<br>$f(x) = w^T\phi(x)+b \tag{22}$</p>
+<p>$\phi(x)$ 对应了 $x$的高维度特征向量。</p>
+<p>此时，SVM 优化模型的对偶问题为：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+& \max_{\alpha} = \sum_{i=1}^m\alpha^{(i)}
+- \frac{1}{2}\sum_{i=1}^m\sum_{j=1}^m \alpha^{(i)} \alpha^{(j)} y^{(i)} y^{(j)} \phi(x^{(i)})^T \phi(x^{(i)}) \\
+\mbox{s.t.} \quad & \sum_{i=1}^m \alpha^{(i)} y^{(i)} = 0, \\
+& 0 \leq \alpha^{(i)} \leq C, \quad i=1,2,3,...,m
+\end{align*}
+\tag{23}</script><p>令$\kappa(x^{(i)}, x^{(j)})$表示 $x^{(i)}$与  $x^{(j)}$的内积：</p>
+<p>$\kappa(x^{(i)}, x^{(j)}) = \langle \phi(x^{(i)}, \phi(x^{(j)})) \rangle = \phi(x^{(i)})^T \phi(x^{(j)}) \tag{24}$</p>
+<p>函数 $κ$ 即表示了核函数（kernel function），引入核函数后，优化模型可以写为：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+& \max_{\alpha} = \sum_{i=1}^m\alpha^{(i)}
+- \frac{1}{2}\sum_{i=1}^m\sum_{j=1}^m \alpha^{(i)} \alpha^{(j)} y^{(i)} y^{(j)} \kappa(x^{(i)}, x^{(j)}) \\
+\mbox{s.t.} \quad & \sum_{i=1}^m \alpha^{(i)} y^{(i)} = 0, \\
+& 0 \leq \alpha^{(i)} \leq C, \quad i=1,2,3,...,m
+\end{align*}
+\tag{26}</script><p>求解后，得到模型：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+f(x)  &= w^T\phi(x) + b \\
+&= \sum_{i=1}^m\alpha^{(i)}y^{(i)}\phi(x^{(i)})^T\phi(x) + b \\
+&= \sum_{i=1}^m\alpha^{(i)}y^{(i)}\kappa(x, x^{(i)}) + b
+\end{align*}
+\tag{27}</script><p><img src="8.png" alt=""></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>如果觉得对您有帮助，就扫我交个朋友吧！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/2.jpg" alt="杨玺彤 WeChat Pay">
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/3.jpg" alt="杨玺彤 Alipay">
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/ML/" rel="tag"># ML</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/01/24/svm/" rel="next" title="svm-1">
+                <i class="fa fa-chevron-left"></i> svm-1
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/01/26/week1/" rel="prev" title="单变量线性回归">
+                单变量线性回归 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/1.jpg" alt="杨玺彤">
+          <p class="site-author-name" itemprop="name">杨玺彤</p>
+           
+              <p class="site-description motion-element" itemprop="description">Be better for something</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">58</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/2396326053/profile?topnav=1&wvr=6&is_all=1" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/witchyang" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#决策边界"><span class="nav-number">1.</span> <span class="nav-text">决策边界</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#硬间隔与软间隔"><span class="nav-number">2.</span> <span class="nav-text">硬间隔与软间隔</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#对偶问题"><span class="nav-number">3.</span> <span class="nav-text">对偶问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#核函数"><span class="nav-number">4.</span> <span class="nav-text">核函数</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">杨玺彤</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.staticfile.org/MathJax/MathJax-2.6-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="custom_mathjax_source">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>
