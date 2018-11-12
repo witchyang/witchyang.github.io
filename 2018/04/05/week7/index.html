@@ -90,13 +90,13 @@
 
 
 
-<meta name="description" content="Support Vector Machines代价函数在逻辑回归中，我们的预测函数为： $h_{\theta}(x) = \frac{1}{1+e^{-\theta^T x}}$ 代价函数为：$cost = -ylogh_{\theta}(x)+(1-y)log(1-h_{\theta}(x))$  当 $y=1 $时，代价函数就为：$\begin{align}cost &amp;amp;= -logh_">
+<meta name="description" content="Support Vector Machines代价函数在逻辑回归中，我们的预测函数为： $h_{\theta}(x) = \frac{1}{1+e^{-\theta^T x}}$ 代价函数为：$cost = -ylogh_{\theta}(x)+(1-y)log(1-h_{\theta}(x))$  当 $y=1 $时，代价函数就为：  \begin{align*} cost &amp;= -logh_{">
 <meta name="keywords" content="ML">
 <meta property="og:type" content="article">
 <meta property="og:title" content="支持向量机">
 <meta property="og:url" content="http://yoursite.com/2018/04/05/week7/index.html">
 <meta property="og:site_name" content="葛小野">
-<meta property="og:description" content="Support Vector Machines代价函数在逻辑回归中，我们的预测函数为： $h_{\theta}(x) = \frac{1}{1+e^{-\theta^T x}}$ 代价函数为：$cost = -ylogh_{\theta}(x)+(1-y)log(1-h_{\theta}(x))$  当 $y=1 $时，代价函数就为：$\begin{align}cost &amp;amp;= -logh_">
+<meta property="og:description" content="Support Vector Machines代价函数在逻辑回归中，我们的预测函数为： $h_{\theta}(x) = \frac{1}{1+e^{-\theta^T x}}$ 代价函数为：$cost = -ylogh_{\theta}(x)+(1-y)log(1-h_{\theta}(x))$  当 $y=1 $时，代价函数就为：  \begin{align*} cost &amp;= -logh_{">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/2018/04/05/week7/1.png">
 <meta property="og:image" content="http://yoursite.com/2018/04/05/week7/2.png">
@@ -104,10 +104,14 @@
 <meta property="og:image" content="http://yoursite.com/2018/04/05/week7/4.png">
 <meta property="og:image" content="http://yoursite.com/2018/04/05/week7/5.png">
 <meta property="og:image" content="http://yoursite.com/2018/04/05/week7/6.png">
-<meta property="og:updated_time" content="2018-11-12T09:01:57.867Z">
+<meta property="og:image" content="http://yoursite.com/2018/04/05/week7/7.png">
+<meta property="og:image" content="http://yoursite.com/2018/04/05/week7/8.png">
+<meta property="og:image" content="http://yoursite.com/2018/04/05/week7/9.png">
+<meta property="og:image" content="http://yoursite.com/2018/04/05/week7/10.png">
+<meta property="og:updated_time" content="2018-11-12T09:24:02.832Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="支持向量机">
-<meta name="twitter:description" content="Support Vector Machines代价函数在逻辑回归中，我们的预测函数为： $h_{\theta}(x) = \frac{1}{1+e^{-\theta^T x}}$ 代价函数为：$cost = -ylogh_{\theta}(x)+(1-y)log(1-h_{\theta}(x))$  当 $y=1 $时，代价函数就为：$\begin{align}cost &amp;amp;= -logh_">
+<meta name="twitter:description" content="Support Vector Machines代价函数在逻辑回归中，我们的预测函数为： $h_{\theta}(x) = \frac{1}{1+e^{-\theta^T x}}$ 代价函数为：$cost = -ylogh_{\theta}(x)+(1-y)log(1-h_{\theta}(x))$  当 $y=1 $时，代价函数就为：  \begin{align*} cost &amp;= -logh_{">
 <meta name="twitter:image" content="http://yoursite.com/2018/04/05/week7/1.png">
 
 
@@ -361,9 +365,13 @@
 <p>$h_{\theta}(x) = \frac{1}{1+e^{-\theta^T x}}$</p>
 <p>代价函数为：$cost = -ylogh_{\theta}(x)+(1-y)log(1-h_{\theta}(x))$</p>
 <p><img src="1.png" alt=""></p>
-<p>当 $y=1 $时，代价函数就为：<br>$\begin{align<em>}<br>cost &amp;= -logh_{\theta}(x)\<br>= -log\frac{1}{1+e^{-z}}, \quad z=\theta^T x<br>\end{align</em>}$</p>
-<p>不难看出，当  $y=1$时，随着 $ z$ 取值变大，预测代价变小，因此，逻辑回归想要在面对正样本 $ y=1$时，获得足够高的预测精度，就希望  $z=θTx≫0$ 。而 SVM 则将上图的曲线拉直为下图中的折线，构成了  $y=1$时的代价函数曲线  $cost1(z)$。</p>
-<p>当 $ y=1$ 时，为了预测精度足够高，SVM 希望  $θTx≥1$。同样，在 $ y=0$时，SVM 定义了代价函数 $ cost0(z)$，为了预测精度足够高，SVM 希望 $ θTx≤−1$：</p>
+<p>当 $y=1 $时，代价函数就为：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+cost &= -logh_{\theta}(x)\
+= -log\frac{1}{1+e^{-z}}, \quad z=\theta^T x
+\end{align*}</script><p>不难看出，当  $y=1$时，随着 $ z$ 取值变大，预测代价变小，因此，逻辑回归想要在面对正样本 $ y=1$时，获得足够高的预测精度，就希望  $z=\theta^T x \gg 0$ 。而 SVM 则将上图的曲线拉直为下图中的折线，构成了  $y=1$时的代价函数曲线  $cost_1(z)$。</p>
+<p>当 $ y=1$ 时，为了预测精度足够高，SVM 希望  $\theta^T x \geq 1$。同样，在 $ y=0$时，SVM 定义了代价函数 $ cost_0(z))$，为了预测精度足够高，SVM 希望 $ \theta^T x \leq -1$：</p>
 <p><img src="2.png" alt=""></p>
 <p><img src="3.png" alt=""></p>
 <p>SVM定义其最小化预测代价的过程为：<br>$\min\limits_{\theta}C[\sum\limits_{i=1}^{m}y^{(i)}cost_1(\theta^Tx^{(i)})+(1-y^{(i)})cost_0(\theta^Tx^{(i)})]+\frac{1}{2}\sum\limits_{j=1}^{n}\theta_j^2$</p>
@@ -390,7 +398,22 @@ h_\theta(x) =\begin{cases}1,\quad \mbox{if $\theta^T x \geq 0$} \\0,\quad \mbox{
 <p>回顾 $C=1/\lambda$，因此：</p>
 <p>$C$ 较大时，相当于 $\lambda$ 较小，可能会导致过拟合，高方差。</p>
 <p>$C$ 较小时，相当于$\lambda$较大，可能会导致低拟合，高偏差。</p>
-<h3 id="核函数"><a href="#核函数" class="headerlink" title="核函数"></a>核函数</h3>
+<h3 id="核函数"><a href="#核函数" class="headerlink" title="核函数"></a>核函数</h3><p>在逻辑回归中，我们会通过多项式扩展来处理非线性分类问题：</p>
+<p><img src="7.png" alt=""></p>
+<p>为了获得上图所示的判定边界，我们的模型可能是${ {\theta }_{0}}+{ {\theta }_{1}}{ {x}_{1}}+{ {\theta }_{2}}{ {x}_{2}}+{ {\theta }_{3}}{ {x}_{1}}{ {x}_{2}}+{ {\theta }_{4}}x_{1}^{2}+{ {\theta }_{5}}x_{2}^{2}+\cdots $的形式。</p>
+<p>我们可以用一系列的新的特征f来替换模型中的每一项。例如令：<br>${ {f}_{1}}={ {x}_{1}},{ {f}_{2}}={ {x}_{2}},{ {f}_{3}}={ {x}_{1}}{ {x}_{2}},{ {f}_{4}}=x_{1}^{2},{ {f}_{5}}=x_{2}^{2}$</p>
+<p>…得到$h_θ(x)=f_1+f_2+…+f_n$。然而，除了对原有的特征进行组合以外，有没有更好的方法来构造$f_1,f_2,f_3$？我们可以利用核函数来计算出新的特征。</p>
+<p>给定一个训练样本$x$，我们利用$x$的各个特征与我们预先选定的<strong>地标</strong>(<strong>landmarks</strong>)$l^{(1)},l^{(2)},l^{(3)}$的近似程度来选取新的特征$f_1,f_2,f_3$。</p>
+<p><img src="8.png" alt=""></p>
+<p>例如：${ {f}_{1}}=similarity(x,{ {l}^{(1)}})=e(-\frac{ { {\left| x-{ {l}^{(1)}} \right|}^{2}}}{2{ {\sigma }^{2}}})$</p>
+<p>其中：${ {\left| x-{ {l}^{(1)}} \right|}^{2}}=\sum{_{j=1}^{n}}{ {({ {x}_{j}}-l_{j}^{(1)})}^{2}}$，为实例$x$中所有特征与地标$l^{(1)}$之间的距离的和。这种距离度量的方式就称之为核函数（Kernel), 最常见的核函数是高斯核函数（Gaussian Kernel）：</p>
+<p>$f_i = exp(-\frac{||x-l^{(i)}||^2}{2\delta^2})$</p>
+<p>在高斯核函数中，如果样本与标记点足够接近，即$x \approx l^{(i)}$<br> ，则：<br> $f \approx exp(-\frac{0^2}{2\delta^2}) \approx 1$<br> 如果样本远离标记点，则：$ f\approx exp(-\frac{(\mbox{large number})^2}{2\delta^2})\approx0 $</p>
+<p> <img src="9.png" alt=""></p>
+<p> 图中水平面的坐标为 $x_{1}$，$x_{2}$而垂直坐标轴代表$f$。可以看出，只有当$x$与$l^{(1)}$重合时$f$才具有最大值。随着$x$的改变$f$值改变的速率受到$\sigma^2$的控制。</p>
+<p>在下图中，当样本处于洋红色的点位置处，因为其离$l^{(1)}$更近，但是离$l^{(2)}$和$l^{(3)}$较远，因此$f_1$接近1，而$f_2$,$f_3$接近0。因此$h_θ(x)=θ_0+θ_1f_1+θ_2f_2+θ_1f_3&gt;0$，因此预测$y=1$。同理可以求出，对于离$l^{(2)}$较近的绿色点，也预测$y=1$，但是对于蓝绿色的点，因为其离三个地标都较远，预测$y=0$。<br><img src="10.png" alt=""></p>
+<p>这样，图中红色的封闭曲线所表示的范围，便是我们依据一个单一的训练样本和我们选取的地标所得出的判定边界，在预测时，我们采用的特征不是训练样本本身的特征，而是通过核函数计算出的新特征$f_1,f_2,f_3$。</p>
+
       
     </div>
 
