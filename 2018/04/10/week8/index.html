@@ -100,7 +100,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/2018/04/10/week8/1.png">
 <meta property="og:image" content="http://yoursite.com/2018/04/10/week8/2.png">
-<meta property="og:updated_time" content="2018-11-13T08:06:42.577Z">
+<meta property="og:updated_time" content="2018-11-13T08:11:37.036Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="聚类 Clustering">
 <meta name="twitter:description" content="无监督学习无监督学习（Unsupervised Lear{ {ning），顾名思义，就是不受监督的学习，一种自由的学习方式。该学习方式不需要先验知识进行指导，而是不断地自我认知，自我巩固，最后进行自我归纳，在机器学习中，无监督学习可以被简单理解为不为训练集提供对应的类别标识（label），其与有监督学习的对比如下： 有监督学习（Supervised Learning）下的训练集：$ (x^{(1)">
@@ -408,8 +408,7 @@ c^{(i)} = \mbox{距 $x^{(i)}$ 最近的聚类中心}</script><p>距离的计算�
 <h3 id="二分K-Means算法"><a href="#二分K-Means算法" class="headerlink" title="二分K-Means算法"></a>二分K-Means算法</h3><p>常规的 K-Means 算法的误差通常只能收敛到局部最小，在此，引入一种称为二分 K-Means（bisecting kmeans）的算法，相较于常规的 K-Means，二分 K-Means 不是一来就随机 $K$个聚类中心，而是首先把所有点归为一个簇，然后将该簇一分为二。计算各个所得簇的失真函数（即误差），选择误差最大的簇再进行划分（即最大程度地减少误差），重复该过程直至达到期望的簇数目。</p>
 <p>二分 KMeans 算法流程大致如下：</p>
 <ol>
-<li>初始时，所有样本被看做在同一个簇：<pre><code> $c^{(1)}=c^{(2)}=...=c^{(m)}$
-</code></pre></li>
+<li>初始时，所有样本被看做在同一个簇：<script type="math/tex; mode=display">c^{(1)}=c^{(2)}=...=c^{(m)}</script></li>
 <li>While $num&lt;k$ （$num$表示当前的簇数）:</li>
 </ol>
 <p>for $i = 1$ to $num$:</p>
@@ -524,8 +523,8 @@ c^{(i)} = \mbox{距 $x^{(i)}$ 最近的聚类中心}</script><p>距离的计算�
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/08/30/mathjax_cmdeditor/" rel="prev" title="Markdown 公式总结">
-                Markdown 公式总结 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/04/12/week8-1/" rel="prev" title="降维 Dimensionality Reduction">
+                降维 Dimensionality Reduction <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -596,7 +595,7 @@ c^{(i)} = \mbox{距 $x^{(i)}$ 最近的聚类中心}</script><p>距离的计算�
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">60</span>
+                <span class="site-state-item-count">61</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
